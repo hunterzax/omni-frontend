@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 const CHATWOOT_BASE_URL = 'https://cw2.i24.dev';
 
 export default function CWPage() {
+    
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
