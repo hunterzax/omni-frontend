@@ -25,9 +25,8 @@ export const Menu = () => {
           </li>
         ))}
       </ul>
-      <Button size="sm" variant="ghost" className="flex gap-1" onClick={() => logout()}>
-        Logout
-      </Button>
+       
+      <button className="w-[167px] h-[44px] rounded-[10px] bg-[#fca0a0] text-[#ffffff]" onClick={() => logout()}>Logout</button>
     </nav>
     // <nav className="menu">
     //   <ul>

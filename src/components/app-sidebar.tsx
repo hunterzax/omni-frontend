@@ -29,7 +29,8 @@ const data = {
   },
   navMain: [
     {
-      title: "Inbox",
+      // title: "Inbox",
+      title: "กล่องข้อความ",
       url: "#",
       icon: Inbox,
       isActive: true,
@@ -223,7 +224,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-foreground">
-              Conversation
+              {/* Conversation */}
+              {`การสนทนา`}
             </div>
           </div>
         </SidebarHeader>
@@ -236,7 +238,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {activeItem?.title}
             </div>
             <Label className="flex items-center gap-2 text-sm">
-              <span>Unreads</span>
+              {/* <span>Unreads</span> */}
+              <span>{`ไม่ได้เปิดอ่าน`}</span>
               <Switch className="shadow-none" />
             </Label>
           </div>
