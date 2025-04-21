@@ -21,7 +21,8 @@ export const Menu = () => {
           </li>
         ))}
       </ul>
-      <button onClick={() => logout()}>Logout</button>
+      
+      <button className="w-[167px] h-[44px] rounded-[10px] bg-[#fca0a0] text-[#ffffff]" onClick={() => logout()}>Logout</button>
     </nav>
   );
 };
