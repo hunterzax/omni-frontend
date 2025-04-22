@@ -13,7 +13,7 @@ interface RightBarProps {
 
 export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps) {
 
-  console.log('contactInfo', contactInfo)
+  // console.log('contactInfo', contactInfo)
   return (
     <div
       className={`fixed right-0 top-0 h-full w-80 bg-white border-l transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
