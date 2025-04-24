@@ -106,8 +106,6 @@ export default function ChatWindow() {
           </div>
         </div>
 
-        {/* if I use h-auto it push my chat input way down */}
-
         {/* Chat Input */}
         <div className="border-t p-4">
           <div className='border rounded-[12px] p-4'>
