@@ -24,7 +24,7 @@ export default function ChatWindow() {
     status: string;
   } | null>(null);
   
-  const {getConversations} = useChatAPI();
+  // const {getConversations} = useChatAPI();
 
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
@@ -122,7 +122,8 @@ export default function ChatWindow() {
   }
 
   const getTestAPI = () => {
-    let test = getConversations();
+    // let test = getConversations();
+    let test = useChatAPI();
   }
 
   return (
@@ -434,8 +435,6 @@ export default function ChatWindow() {
             </div>
           </div> */}
         {/* </div> */}
-
-        {/* if I use h-auto it push my chat input way down */}
 
         {/* Chat Input */}
         {/* <div className="border-t p-4">
