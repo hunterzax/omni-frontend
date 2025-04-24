@@ -5,6 +5,7 @@ import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
+import { useChatAPI } from "@hooks/chat-api"
 
 interface Message {
   id: string;
@@ -22,7 +23,8 @@ export default function ChatWindow() {
     email: string;
     status: string;
   } | null>(null);
-
+  
+  const {getConversations} = useChatAPI();
 
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
@@ -119,8 +121,15 @@ export default function ChatWindow() {
     )
   }
 
+  const getTestAPI = () => {
+    let test = getConversations();
+  }
+
   return (
     <div className="flex h-full bg-white">
+      <div>
+        <button onClick={() => getTestAPI()}>testW</button>
+      </div>
       <div className={`flex flex-col transition-all duration-300 h-full overflow-hidden ${isRightBarOpen ? "w-[calc(100%-300px)] pr-3" : "w-full"}`}>
         <div id='chat-panel' className='h-full '>
           <div ref={headerPropsRef} id='header-chat' className='h-[80px]' onClick={() => handleAvatarClick(contactInfo)}>
