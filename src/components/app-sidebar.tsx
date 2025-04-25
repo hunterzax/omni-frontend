@@ -19,6 +19,13 @@ import {
   useSidebar,
 } from "@components/ui/sidebar"
 import { Switch } from "@components/ui/switch"
+import { conversationList } from '../futures/chat/mockData';
+import ReplyIcon from '@mui/icons-material/Reply';
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
+import { Badge } from "./ui/badge"
+import { useState } from "react"
+
+// conversationList
 
 // This is sample data
 const data = {
@@ -144,12 +151,15 @@ const data = {
   ],
 }
 
+const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
   const [mails, setMails] = React.useState(data.mails)
-  const { setOpen } = useSidebar()
+  const { setOpen } = useSidebar();
+  const [selectTabs, setselectTabs] = useState<any>('mine');
 
   return (
     <Sidebar
@@ -244,25 +254,86 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </Label>
           </div>
           <SidebarInput placeholder="Type to search..." />
+          <div id="tab-custom" className="w-full flex gap-2">
+            <div className={`flex justify-center items-center border-b-[1px] ${selectTabs == 'mine' ? 'border-blue-500' : 'border-transparent'} cursor-pointer`} onClick={() => setselectTabs('mine')}>
+              <span>{'Mine'}</span>
+              <div id='badge-custom' className={`w-3 h-3 ${selectTabs == 'mine' ? 'bg-blue-500' : 'bg-[#c7c7c7]'} text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1 mt-1`}>
+                0
+              </div>
+            </div>
+            <div className={`flex justify-center items-center border-b-[1px] ${selectTabs == 'unassigned' ? 'border-blue-500' : 'border-transparent'} cursor-pointer`} onClick={() => setselectTabs('unassigned')}>
+              <span>{'Unassigned'}</span>
+              <div id='badge-custom' className={`w-3 h-3 ${selectTabs == 'unassigned' ? 'bg-blue-500' : 'bg-[#c7c7c7]'} text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1 mt-1`}>
+                0
+              </div>
+            </div>
+            <div className={`flex justify-center items-center border-b-[1px] ${selectTabs == 'all' ? 'border-blue-500' : 'border-transparent'} cursor-pointer`} onClick={() => setselectTabs('all')}>
+              <span>{'All'}</span>
+              <div id='badge-custom' className={`w-3 h-3 ${selectTabs == 'all' ? 'bg-blue-500' : 'bg-[#c7c7c7]'} text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1 mt-1`}>
+                0
+              </div>
+            </div>
+          </div>
+          {/* <div>
+            <Tabs defaultValue="mine" onChange={(e: any) => console.log(e)}>
+              <TabsList className="w-full flex gap-2">
+                <TabsTrigger value="mine">Mine 
+                  <div className={`w-3 h-3 ${selectTabs == 'mine' ? 'bg-blue-200' : 'bg-red-200'} text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1`}>0</div></TabsTrigger>
+                <TabsTrigger value="unassigned">Unassigned <div className="w-3 h-3 bg-red-200 text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1">0</div></TabsTrigger>
+                <TabsTrigger value="all">All <div className="w-3 h-3 bg-red-200 text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1">0</div></TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div> */}
         </SidebarHeader>
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-              {mails.map((mail) => (
+              {conversationList.payload?.map((item: any) => (
                 <a
                   href="#"
-                  key={mail.email}
+                  key={item?.id}
                   className="flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                 >
-                  <div className="flex w-full items-center gap-2">
-                    <span>{mail.name}</span>{" "}
-                    <span className="ml-auto text-xs">{mail.date}</span>
+                  <div className="flex items-center space-x-3 cursor-pointer">
+                    <div 
+                      className={`w-8 h-8 rounded-full relative bg-cover`}
+                      style={{backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})`}}
+                    >
+                      <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                    </div>
+                    <div>
+                      <div className="text-[12px] text-gray-400 inline-block mr-2">{item?.meta?.channel}</div>
+                      <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
+                      <div className="">
+                        <span><ReplyIcon sx={{fontSize: 12}}/></span>
+                        {item?.last_non_activity_message?.processed_message_content}
+                      </div>
+                      <div className="flex mt-1">
+                        {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any) => {
+                          return(
+                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]">
+                            {lbitem}
+                          </div>
+                        )}) : false}
+                      </div>
+                    </div>
                   </div>
-                  <span className="font-medium">{mail.subject}</span>
-                  <span className="line-clamp-2 w-[260px] whitespace-break-spaces text-xs">
-                    {mail.teaser}
-                  </span>
                 </a>
+
+                // <a
+                //   href="#"
+                //   key={mail.email}
+                //   className="flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                // >
+                //   <div className="flex w-full items-center gap-2">
+                //     <span>{mail.name}</span>{" "}
+                //     <span className="ml-auto text-xs">{mail.date}</span>
+                //   </div>
+                //   <span className="font-medium">{mail.subject}</span>
+                //   <span className="line-clamp-2 w-[260px] whitespace-break-spaces text-xs">
+                //     {mail.teaser}
+                //   </span>
+                // </a>
               ))}
             </SidebarGroupContent>
           </SidebarGroup>

@@ -11,7 +11,7 @@ export function useChatAPI() {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: 'https://cw.i24.dev/api/v1/accounts/1/conversations',
+        url: 'https://cw2.i24.dev/api/v1/accounts/1/conversations',
         // url: 'https://cors-anywhere.herokuapp.com/https://cw.i24.dev/api/v1/accounts/1/conversations',
         headers: {
             'api_access_token': 'B68puvfKsCzD5StRz9cMkkrj'
