@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import RightBar from './RightBar';
-import { chatData, contactInfo } from './mockData';
+import { chatData, contactInfo, chatListData } from './mockData';
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
@@ -24,7 +24,7 @@ export default function ChatWindow() {
     status: string;
   } | null>(null);
   
-  // const {getConversations} = useChatAPI();
+  const {getChatdetails} = useChatAPI();
 
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
@@ -69,67 +69,16 @@ export default function ChatWindow() {
     }
   };
 
-  const testrender = () => {
-    return (
-      <>
-      <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div>
-              <div>test</div></>
-    )
-  }
+  const [chatDT, setchatDT] = useState<any>(chatListData?.find((item: any) => item?.id == 20)?.payload);
 
-  const getTestAPI = () => {
-    // let test = getConversations();
-    let test = useChatAPI();
+  const getTestAPI = async () => {
+    let test = await getChatdetails(20);
   }
 
   return (
     <div className="flex h-full bg-white">
       <div>
-        <button onClick={() => getTestAPI()}>testW</button>
+        <button onClick={() => getTestAPI()}>testWX</button>
       </div>
       <div className={`flex flex-col transition-all duration-300 h-full overflow-hidden ${isRightBarOpen ? "w-[calc(100%-300px)] pr-3" : "w-full"}`}>
         <div id='chat-panel' className='h-full '>
@@ -150,8 +99,24 @@ export default function ChatWindow() {
               </div>
             </div>
           </div>
-          <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5`}>
-            {chatData.map((chat) => (
+          <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
+            {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {return(
+              <div
+                key={`${msg.inbox_id}-${idx}`}
+                className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center" : "justify-end"}`}
+              >
+                {/* <span>{msg?.content}</span> */}
+                {msg?.message_type === 0 && (
+                    <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
+                      <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                    </div>
+                )}
+                  <div className={`${msg?.message_type === 0 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
+                    <p className="whitespace-pre-line">{msg.content}</p>
+                  </div>
+              </div>
+            )}): []}
+            {/* {chatData.map((chat) => (
               chat?.conversation.map((msg, idx) => (
                 <div
                   key={`${chat.customerId}-${idx}`}
@@ -167,7 +132,7 @@ export default function ChatWindow() {
                   </div>
                 </div>
               ))
-            ))}
+            ))} */}
           </div>
           <div id='footer-chat' className='h-[190px]'>
             <div className="border-t p-4 w-full h-full">
