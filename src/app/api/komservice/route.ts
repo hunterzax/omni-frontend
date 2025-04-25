@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const CHATWOOT_BASE_URL = 'https://cw2.i24.dev';
 
 export async function GET(request: Request) {
   try {
+
+    const { searchParams } = new URL(request.url);
+    const msgId = searchParams.get('msg-id');
+
+    console.log('msg-id ------>', msgId)
    
     // Perform login with CSRF token
     const loginResponse:any =  await axios({
