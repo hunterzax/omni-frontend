@@ -7,7 +7,6 @@ const TOKEN: any = 'B68puvfKsCzD5StRz9cMkkrj';
 
 export async function useChatAPI() {
 
-
     // let config = {
     //     method: 'get',
     //     maxBodyLength: Infinity,
