@@ -4,7 +4,9 @@ import axios from 'axios';
 const CHATWOOT_BASE_URL = 'https://cw2.i24.dev';
 
 export async function GET(request: Request) {
+  console.log('inside x')
   try {
+
 
     const url = new URL(request?.url);
     const id = url.searchParams.get('msg-id');
@@ -18,6 +20,8 @@ export async function GET(request: Request) {
             'api_access_token': 'B68puvfKsCzD5StRz9cMkkrj',
         },
     });
+
+    console.log('response', response)
 
     // Create response with cookies
     const nextResponse = NextResponse.json(response?.data);

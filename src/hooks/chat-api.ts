@@ -21,14 +21,18 @@ export function useChatAPI() {
     const getChatdetails = async (id: any) => {
         try {
             // const response = await axios.get(`https://cw.i24.dev/api/v1/accounts/1/conversations/${id}/messages`,{
-            const response = await axios.get(`/api/get-chatdetails`,{
-                // params: {
-                //     'msg-id': id
-                // }
-            }).then((res: any) => {return res?.data?.data});
+            // const response = await axios.get(`/api/get-chatdetails`,{
+            //     // params: {
+            //     //     'msg-id': id
+            //     // }
+            // }).then((res: any) => {return res?.data?.data});
 
-            return response;
+            const res_k = await axios.get(`/api/komservice`, { params: {'msg-id': id}})
+            console.log('res_k', res_k)
+
+            // return response;
         } catch (error) {
+            console.log('errrorrrrr')
             console.error(error);
         }
 
