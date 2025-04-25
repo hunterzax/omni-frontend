@@ -77,9 +77,9 @@ export default function ChatWindow() {
 
   return (
     <div className="flex h-full bg-white">
-      <div>
+      {/* <div>
         <button onClick={() => getTestAPI()}>testWX</button>
-      </div>
+      </div> */}
       <div className={`flex flex-col transition-all duration-300 h-full overflow-hidden ${isRightBarOpen ? "w-[calc(100%-300px)] pr-3" : "w-full"}`}>
         <div id='chat-panel' className='h-full '>
           <div ref={headerPropsRef} id='header-chat' className='h-[80px]' onClick={() => handleAvatarClick(contactInfo)}>
