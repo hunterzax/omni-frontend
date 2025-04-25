@@ -72,6 +72,8 @@ export default function ChatWindow() {
   const [chatDT, setchatDT] = useState<any>(chatListData?.find((item: any) => item?.id == 20)?.payload);
 
   const getTestAPI = async () => {
+
+    console.log('xxxxxx')
     let test = await getChatdetails(20);
   }
 
