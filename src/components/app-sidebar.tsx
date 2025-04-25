@@ -23,7 +23,8 @@ import { conversationList } from '../futures/chat/mockData';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import { Badge } from "./ui/badge"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useChatAPI } from "@hooks/chat-api"
 
 // conversationList
 
@@ -153,7 +154,7 @@ const data = {
 
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
@@ -161,6 +162,24 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { setOpen } = useSidebar();
   const [selectTabs, setselectTabs] = useState<any>('mine');
 
+  const {getConversations} = useChatAPI();
+
+  const [dataChat, setdataChat] = useState<any>();
+
+  useEffect(() => {
+    if(!dataChat){
+      getDATA();
+    }
+  }, [dataChat]);
+
+  const getDATA: any = async () => {
+    let data: any =  await getConversations();
+
+    setdataChat(data)
+  }
+
+  console.log(">>> dataChat", dataChat)
+  
   return (
     <Sidebar
       collapsible="icon"
@@ -239,6 +258,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
           </div>
         </SidebarHeader>
+        <SidebarContent>
+          test
+        </SidebarContent>
       </Sidebar>
 
       <Sidebar collapsible="none" className="hidden flex-2 md:flex">
@@ -254,7 +276,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </Label>
           </div>
           <SidebarInput placeholder="Type to search..." />
-          <div id="tab-custom" className="w-full flex gap-2">
+
+          {/* เดียวมาแก้ bangju 25/04/2025 */}
+          {/* <div id="tab-custom" className="w-full flex gap-2">
             <div className={`flex justify-center items-center border-b-[1px] ${selectTabs == 'mine' ? 'border-blue-500' : 'border-transparent'} cursor-pointer`} onClick={() => setselectTabs('mine')}>
               <span>{'Mine'}</span>
               <div id='badge-custom' className={`w-3 h-3 ${selectTabs == 'mine' ? 'bg-blue-500' : 'bg-[#c7c7c7]'} text-[10px] flex justify-center items-center rounded-[3px] text-white ml-1 mt-1`}>
@@ -273,7 +297,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 0
               </div>
             </div>
-          </div>
+          </div> */}
+
           {/* <div>
             <Tabs defaultValue="mine" onChange={(e: any) => console.log(e)}>
               <TabsList className="w-full flex gap-2">
@@ -288,7 +313,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
-              {conversationList.payload?.map((item: any) => (
+              {dataChat?.payload?.map((item: any) => (
                 <a
                   href="#"
                   key={item?.id}
