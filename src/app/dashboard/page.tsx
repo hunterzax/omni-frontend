@@ -24,12 +24,6 @@ export default function Page() {
 
   const [selectedID, setSelectedID] = useState<any>()
 
-  useEffect(() => {
-    console.log(">>> selectedID", selectedID)
-  }, [selectedID])
-  
-  console.log('selectedID', selectedID)
-
   return (
     <SidebarProvider
       style={
