@@ -16,13 +16,18 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@components/ui/sidebar"
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 export default function Page() {
 
   const ChatX = createContext(null);
 
   const [selectedID, setSelectedID] = useState<any>()
+
+  useEffect(() => {
+    console.log(">>> selectedID", selectedID)
+  }, [selectedID])
+  
   console.log('selectedID', selectedID)
 
   return (
