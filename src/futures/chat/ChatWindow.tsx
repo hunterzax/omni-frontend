@@ -9,8 +9,9 @@ import CachedIcon from '@mui/icons-material/Cached';
 import { useChatAPI } from "@hooks/chat-api"
 import dayjs from 'dayjs';
 import { Skeleton } from '@components/ui/skeleton';
-import CircularProgress from '@mui/material/CircularProgress';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Spinloading from '@components/ui/loading';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip';
 
 interface Message {
   id: string;
@@ -80,22 +81,19 @@ export default function ChatWindow({id} : any) {
   const [chatInfo, setchatInfo] = useState<any>();
   const [chatDT, setchatDT] = useState<any>();
   const [tk, settk] = useState<boolean>(false);
+  const [isLoading, setisLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if(id){
-      setisLoading(false);
-      const getMessageDT = async () => {
-        let respondt = await getChatdetails(id);
-        setchatDT(respondt?.payload?.reverse())
-        settk(!tk);
-  
-        getAnotherdetail(respondt?.meta?.contact?.id);
-      }
-  
-      if(!chatDT){
-        getMessageDT();
-      }
+    setisLoading(false);
+    const getMessageDT = async () => {
+      let respondt = await getChatdetails(id);
+      setchatDT(respondt?.payload?.reverse())
+      settk(!tk);
+
+      getAnotherdetail(respondt?.meta?.contact?.id);
     }
+
+    getMessageDT();
   }, [id]);
 
   const getAnotherdetail: any = async (userID: any) => {
@@ -106,14 +104,11 @@ export default function ChatWindow({id} : any) {
     setisLoading(true);
   }
 
-
   function renderDate(value: any){
     const unixDate = value;
     const d = new Date(unixDate);
     return dayjs(d).format('MMM DD, HH:mm A')
   }
-
-  const [isLoading, setisLoading] = useState<boolean>(false);
 
   return (
     <div className="flex h-full bg-white relative">
@@ -129,8 +124,11 @@ export default function ChatWindow({id} : any) {
                 {/* <div> */}
                   {chatInfo?.meta ?
                     <div className="flex items-center space-x-3 cursor-pointer">
-                      <div className="w-10 h-10 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
-                        <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-3 h-3 rounded-xl right-0`}></div>
+                      <div 
+                        className="w-10 h-10 rounded-full relative bg-cover"
+                        style={{backgroundImage: `url(${chatInfo?.meta?.sender?.thumbnail ? chatInfo?.meta?.sender?.thumbnail : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s'})`}}
+                      >
+                        <div className={`${chatInfo?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
                       </div>
                       <div>
                         <div className="font-medium capitalize">{chatInfo?.meta?.sender ? chatInfo?.meta?.sender?.name : ''}</div>
@@ -161,15 +159,15 @@ export default function ChatWindow({id} : any) {
             <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
               <div className=' flex flex-col-reverse'>
                 {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {
-                  console.log(">>> msg", msg)
+                  // console.log(">>> msg", msg)
                   return(
                     <div
                       key={`${msg.inbox_id}-${idx}`}
                       className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center" : "justify-end"}`}
-                      style={{marginTop: chatDT?.length -1 != idx ? 15 : 0}}
+                      style={{marginTop: chatDT?.length -1 != idx ? 5 : 0}}
                     >
                         {msg?.status == 'failed' && msg?.message_type === 1 && <div className='h-full flex justify-end items-end'><CachedIcon sx={{fontSize: 12, color: '#f65353'}}/></div>}
-                        <div className={`${msg?.status == 'failed' ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
+                        <div className={`${msg?.status == 'failed' && msg?.message_type === 1 ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
                           <p className="whitespace-pre-line">{msg.content}</p>
                           {msg?.attachments?.length > 0 &&
                           <div className='mt-2'>
@@ -178,15 +176,32 @@ export default function ChatWindow({id} : any) {
                           }
 
                           {msg?.message_type !== 2 && 
-                            <div className='text-[10px]'>
+                            <div className={`${msg?.status == 'failed' && msg?.message_type === 0 && 'text-red-300'} text-[10px] flex items-center gap-2`}>
                               {renderDate(msg?.created_at)}
+                              {msg?.status == 'failed' && 
+                              // <InfoOutlinedIcon sx={{fontSize: 12}}/>
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <InfoOutlinedIcon sx={{fontSize: 12}}/>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>{msg?.content_attributes?.external_error}</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              }
                             </div>
                           }
                         </div>
                       {msg?.message_type === 1 && (
                         <div className='h-full flex justify-end items-end'>
-                          <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
-                            <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                          <div 
+                            className="w-5 h-5 bg-gray-200 rounded-full relative bg-cover"
+                            style={{backgroundImage: `url(${msg?.sender ? msg?.sender?.avatar_url : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s'})`}}
+                            // avatar_url
+                          >
+                            <div className={`${msg?.sender?.availability_status == "online" ? 'bg-green-400' : 'bg-transparent'} absolute w-1 h-1 rounded-xl right-0`}></div>
                           </div>
                         </div>
                       )}
@@ -257,7 +272,7 @@ export default function ChatWindow({id} : any) {
             <RightBar
               isOpen={isRightBarOpen}
               onClose={() => setIsRightBarOpen(false)}
-              contactInfo={selectedContact || undefined}
+              contactInfo={chatInfo || undefined}
             />
           </div>
         </div>
