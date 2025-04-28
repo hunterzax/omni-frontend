@@ -26,6 +26,9 @@ export default function ChatWindow() {
   
   const {getChatdetails} = useChatAPI();
 
+  const msgID: any = localStorage?.getItem('msgID');
+  // const idURL: any = wind
+
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
   const rightBarRef: any = useRef(null);
@@ -71,10 +74,17 @@ export default function ChatWindow() {
 
   const [chatDT, setchatDT] = useState<any>(chatListData?.find((item: any) => item?.id == 20)?.payload);
 
+  useEffect(() => {
+    console.log(">>> msgID", msgID)
+  }, [msgID])
+  
+  const [first, setfirst] = useState<boolean>(false)
+
   const getTestAPI = async () => {
 
     console.log('xxxxxx')
-    let test = await getChatdetails(20);
+    // let test = await getChatdetails(20);
+    setfirst(!first)
   }
 
   return (

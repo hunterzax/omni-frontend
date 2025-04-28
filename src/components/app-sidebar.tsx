@@ -160,7 +160,7 @@ const data = {
 
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
-export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
@@ -170,6 +170,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
   const {getConversations} = useChatAPI();
 
+  const msgID: any = localStorage?.getItem('msgID');
   const [dataChat, setdataChat] = useState<any>();
 
   useEffect(() => {
@@ -178,13 +179,22 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
     }
   }, [dataChat]);
 
+  const [first, setfirst] = useState<boolean>(false)
+
   const getDATA: any = async () => {
     let data: any =  await getConversations();
 
-    setdataChat(data)
+    setdataChat(data);
+    setselectChat(msgID);
   }
 
-  console.log(">>> dataChat", dataChat)
+  const [selectChat, setselectChat] = useState<any>();
+
+  const onSelectChat: any = (item: any) => {
+    localStorage?.setItem('msgID', item?.id);
+    setselectChat(item?.id);
+    setfirst(!first)
+  }
   
   return (
     <Sidebar
@@ -392,7 +402,9 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 <a
                   href="#"
                   key={item?.id}
-                  className="flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-blue-100' : 'bg-transparent'}`}
+                  // style={{backgroundColor: msgID == item?.id ? 'red' : 'transparent'}}
+                  onClick={() => onSelectChat(item)}
                 >
                   <div className="flex items-center space-x-3 cursor-pointer">
                     <div 
@@ -409,9 +421,9 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                         {item?.last_non_activity_message?.processed_message_content}
                       </div>
                       <div className="flex mt-1">
-                        {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any) => {
+                        {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
                           return(
-                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]">
+                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]" key={lbitem +'_'+index}>
                             {lbitem}
                           </div>
                         )}) : false}

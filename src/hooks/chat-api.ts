@@ -27,10 +27,10 @@ export function useChatAPI() {
             //     // }
             // }).then((res: any) => {return res?.data?.data});
 
-            const res_k = await axios.get(`/api/komservice`, { params: {'msg-id': id}})
-            console.log('res_k', res_k)
+            const response = await axios.get(`/api/get-chatdetails`, { params: {'msg-id': id}}).then((res: any) => {return res?.data});
+            console.log('response', response)
 
-            // return response;
+            return response;
         } catch (error) {
             console.log('errrorrrrr')
             console.error(error);
