@@ -26,6 +26,9 @@ export default function ChatWindow() {
   
   const {getChatdetails} = useChatAPI();
 
+  const msgID: any = localStorage?.getItem('msgID');
+  // const idURL: any = wind
+
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
   const rightBarRef: any = useRef(null);
@@ -71,17 +74,24 @@ export default function ChatWindow() {
 
   const [chatDT, setchatDT] = useState<any>(chatListData?.find((item: any) => item?.id == 20)?.payload);
 
+  useEffect(() => {
+    console.log(">>> msgID", msgID)
+  }, [msgID])
+  
+  const [first, setfirst] = useState<boolean>(false)
+
   const getTestAPI = async () => {
 
     console.log('xxxxxx')
-    let test = await getChatdetails(20);
+    // let test = await getChatdetails(20);
+    setfirst(!first)
   }
 
   return (
     <div className="flex h-full bg-white">
-      <div>
+      {/* <div>
         <button onClick={() => getTestAPI()}>testWX</button>
-      </div>
+      </div> */}
       <div className={`flex flex-col transition-all duration-300 h-full overflow-hidden ${isRightBarOpen ? "w-[calc(100%-300px)] pr-3" : "w-full"}`}>
         <div id='chat-panel' className='h-full '>
           <div ref={headerPropsRef} id='header-chat' className='h-[80px]' onClick={() => handleAvatarClick(contactInfo)}>

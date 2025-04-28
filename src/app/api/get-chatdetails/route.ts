@@ -8,14 +8,16 @@ export async function GET(request: Request) {
   try {
 
 
-    const url = new URL(request?.url);
-    const id = url.searchParams.get('msg-id');
+    const { searchParams } = new URL(request.url);
+    const msgId = searchParams.get('msg-id');
+
+    console.log(">>> msgId", msgId)
    
     // Perform login with CSRF token
     const response:any =  await axios({
         method: 'get',
         // url: `https://cw.i24.dev/api/v1/accounts/1/conversations${id}`,
-        url: `https://cw.i24.dev/api/v1/accounts/1/conversations/${id}/messages`,
+        url: `https://cw.i24.dev/api/v1/accounts/1/conversations/${msgId}/messages`,
         headers: {
             'api_access_token': 'B68puvfKsCzD5StRz9cMkkrj',
         },

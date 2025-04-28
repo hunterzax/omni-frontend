@@ -25,6 +25,12 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs"
 import { Badge } from "./ui/badge"
 import { useEffect, useState } from "react"
 import { useChatAPI } from "@hooks/chat-api"
+import ChatIcon from '@mui/icons-material/Chat';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import SendIcon from '@mui/icons-material/Send';
+import FolderIcon from '@mui/icons-material/Folder';
+import AddIcon from '@mui/icons-material/Add';
 
 // conversationList
 
@@ -154,7 +160,7 @@ const data = {
 
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
-export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
@@ -164,6 +170,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
 
   const {getConversations} = useChatAPI();
 
+  const msgID: any = localStorage?.getItem('msgID');
   const [dataChat, setdataChat] = useState<any>();
 
   useEffect(() => {
@@ -172,13 +179,22 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
     }
   }, [dataChat]);
 
+  const [first, setfirst] = useState<boolean>(false)
+
   const getDATA: any = async () => {
     let data: any =  await getConversations();
 
-    setdataChat(data)
+    setdataChat(data);
+    setselectChat(msgID);
   }
 
-  console.log(">>> dataChat", dataChat)
+  const [selectChat, setselectChat] = useState<any>();
+
+  const onSelectChat: any = (item: any) => {
+    localStorage?.setItem('msgID', item?.id);
+    setselectChat(item?.id);
+    setfirst(!first)
+  }
   
   return (
     <Sidebar
@@ -249,7 +265,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
         </SidebarFooter>
       </Sidebar>
 
-      <Sidebar collapsible="none"  className="hidden flex-2 md:flex border-r">
+      <Sidebar collapsible="none"  className="w-[320px] hidden flex-2 md:flex border-r">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-foreground">
@@ -259,7 +275,76 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
           </div>
         </SidebarHeader>
         <SidebarContent>
-          test
+          <div className="py-2">
+            <div className="1-bars">
+              <a
+                href="#"
+                key={'1-mnu-list'}
+                className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+              >
+                <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
+                  <ChatIcon sx={{fontSize: 13, marginRight: '5px'}}/> All Conversations
+                </div>
+              </a>
+              <a
+                href="#"
+                key={'2-mnu-list'}
+                className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+              >
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out">
+                  <AlternateEmailIcon sx={{fontSize: 13, marginRight: '5px'}}/> Mentions
+                </div>
+              </a>
+              <a
+                href="#"
+                key={'3-mnu-list'}
+                className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+              >
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out">
+                  <MarkEmailUnreadIcon sx={{fontSize: 13, marginRight: '5px'}}/> Unattended
+                </div>
+              </a>
+            </div>
+          </div>
+          <div className="py-1 px-2">
+            <div className="px-2 text-sm font-[400] mb-2">{'Inboxeds'}</div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'APIByBank'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'i24dice_bot'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'Omni'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'Zigma'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <AddIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'New Inbox'}
+            </div>
+          </div>
+          <div className="py-1 px-2">
+            <div className="px-2 text-sm font-[400] mb-2">{'Labels'}</div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+              <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2"/> {'facebook'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+              <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2"/> {'label1'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+              <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2"/> {'line'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+              <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2"/> {'shopee'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+              <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2"/> {'tiktok'}
+            </div>
+            <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+              <AddIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'New label'}
+            </div>
+          </div>
         </SidebarContent>
       </Sidebar>
 
@@ -311,13 +396,15 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
           </div> */}
         </SidebarHeader>
         <SidebarContent>
-          <SidebarGroup className="px-0">
+          <SidebarGroup className="p-0">
             <SidebarGroupContent>
               {dataChat?.payload?.map((item: any) => (
                 <a
                   href="#"
                   key={item?.id}
-                  className="flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-blue-100' : 'bg-transparent'}`}
+                  // style={{backgroundColor: msgID == item?.id ? 'red' : 'transparent'}}
+                  onClick={() => onSelectChat(item)}
                 >
                   <div className="flex items-center space-x-3 cursor-pointer">
                     <div 
@@ -334,9 +421,9 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                         {item?.last_non_activity_message?.processed_message_content}
                       </div>
                       <div className="flex mt-1">
-                        {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any) => {
+                        {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
                           return(
-                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]">
+                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]" key={lbitem +'_'+index}>
                             {lbitem}
                           </div>
                         )}) : false}
