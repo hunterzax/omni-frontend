@@ -20,15 +20,20 @@ export function useChatAPI() {
 
     const getChatdetails = async (id: any) => {
         try {
-            // const response = await axios.get(`https://cw.i24.dev/api/v1/accounts/1/conversations/${id}/messages`,{
-            // const response = await axios.get(`/api/get-chatdetails`,{
-            //     // params: {
-            //     //     'msg-id': id
-            //     // }
-            // }).then((res: any) => {return res?.data?.data});
-
             const response = await axios.get(`/api/get-chatdetails`, { params: {'msg-id': id}}).then((res: any) => {return res?.data});
-            console.log('response', response)
+
+            return response;
+        } catch (error) {
+            console.log('errrorrrrr')
+            console.error(error);
+        }
+
+        return null
+    }
+
+    const getUserdetails = async (id: any) => {
+        try {
+            const response = await axios.get(`/api/get-user-detail`, { params: {'msg-id': id}}).then((res: any) => {return res?.data});
 
             return response;
         } catch (error) {
@@ -41,6 +46,7 @@ export function useChatAPI() {
 
     return {
         getConversations,
-        getChatdetails
+        getChatdetails,
+        getUserdetails
     }
 }

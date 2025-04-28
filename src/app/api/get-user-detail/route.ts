@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     const response:any =  await axios({
         method: 'get',
         // url: `https://cw.i24.dev/api/v1/accounts/1/conversations${id}`,
-        url: `https://cw.i24.dev/api/v1/accounts/1/conversations/${msgId}/messages`,
+        url: `https://cw.i24.dev/api/v1/accounts/1/contacts/${msgId}/conversations`,
         headers: {
             'api_access_token': 'B68puvfKsCzD5StRz9cMkkrj',
         },
