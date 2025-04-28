@@ -20,8 +20,6 @@ import { createContext, useEffect, useState } from 'react';
 
 export default function Page() {
 
-  const ChatX = createContext(null);
-
   const [selectedID, setSelectedID] = useState<any>()
 
   return (
@@ -33,8 +31,7 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-      <ChatX.Provider value={null}>
-        <AppSidebar setSelectedID={setSelectedID} />
+        <AppSidebar mode='conversations' setSelectedID={setSelectedID} />
         {/* <AppSidebar/> */}
         <SidebarInset>
           {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
@@ -59,7 +56,6 @@ export default function Page() {
           </div>
 
         </SidebarInset>
-      </ChatX.Provider>
     </SidebarProvider>
   );
 }

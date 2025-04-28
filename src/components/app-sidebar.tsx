@@ -158,15 +158,10 @@ const data = {
   ],
 }
 
-type ReturnValue = {
-  onSelectID: (value: any) => void;
-}
-
-
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
 // export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any, setSelectedID:any) {
-export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID: any }) {
+export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID: any, mode: 'conversations' | 'contacts' }) {
 
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
@@ -273,15 +268,8 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
         </SidebarFooter>
       </Sidebar>
 
-      <Sidebar collapsible="none" className="w-[320px] hidden flex-2 md:flex border-r">
-        <SidebarHeader className="gap-3.5 border-b p-4">
-          <div className="flex w-full items-center justify-between">
-            <div className="text-base font-medium text-foreground">
-              {/* Conversation */}
-              {`การสนทนา`}
-            </div>
-          </div>
-        </SidebarHeader>
+      <Sidebar collapsible="none" className="w-[320px]] hidden flex-2 md:flex border-r">
+        {mode == 'conversations' &&
         <SidebarContent>
           <div className="py-2">
             <div className="1-bars">
@@ -354,8 +342,49 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
             </div>
           </div>
         </SidebarContent>
+        }
+        
+        {mode == 'contacts' && 
+        <SidebarContent>
+          <div className="py-2">
+            <div className="1-bars">
+              <a
+                href="#"
+                key={'1-mnu-list'}
+                className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+              >
+                <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
+                  <ChatIcon sx={{ fontSize: 13, marginRight: '5px' }} /> All Contacts
+                </div>
+              </a>
+            </div>
+            <div className="py-1 px-2 mt-2">
+              <div className="px-2 text-sm font-[500] mb-2">{'Tagged with'}</div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2" /> {'facebook'}
+              </div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2" /> {'label1'}
+              </div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2" /> {'line'}
+              </div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2" /> {'shopee'}
+              </div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2" /> {'tiktok'}
+              </div>
+              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+                <AddIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'New label'}
+              </div>
+            </div>
+          </div>
+        </SidebarContent>
+        }
       </Sidebar>
 
+      {mode == 'conversations' &&
       <Sidebar collapsible="none" className="hidden flex-2 md:flex">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
@@ -419,7 +448,7 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
                       className={`w-8 h-8 rounded-full relative bg-cover`}
                       style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
                     >
-                      <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                      <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
                     </div>
                     <div>
                       <div className="text-[12px] text-gray-400 inline-block mr-2">{item?.meta?.channel}</div>
@@ -460,6 +489,7 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>
+      }
     </Sidebar>
   )
 }
