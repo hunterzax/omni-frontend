@@ -186,7 +186,7 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
     }
   }, [dataChat]);
 
-  const [first, setfirst] = useState<boolean>(false)
+  const [tk, settk] = useState<boolean>(false)
 
   const getDATA: any = async () => {
     let data: any = await getConversations();
@@ -200,13 +200,8 @@ export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typ
   const onSelectChat: any = (item: any) => {
     localStorage?.setItem('msgID', item?.id);
     setselectChat(item?.id);
-    setfirst(!first)
-
-    console.log('set ID')
-    // setSelectedID(item?.id)
-    setSelectedID(20)
-
-    // onSelectID(() => {return 20})
+    setSelectedID(item?.id);
+    settk(!tk)
   }
 
   return (

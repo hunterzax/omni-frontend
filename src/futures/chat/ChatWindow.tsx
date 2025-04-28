@@ -5,7 +5,9 @@ import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
 import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
+import CachedIcon from '@mui/icons-material/Cached';
 import { useChatAPI } from "@hooks/chat-api"
+import dayjs from 'dayjs';
 
 interface Message {
   id: string;
@@ -27,7 +29,6 @@ export default function ChatWindow({id} : any) {
   const {getChatdetails} = useChatAPI();
 
   const msgID: any = localStorage?.getItem('msgID');
-  // const idURL: any = wind
 
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
@@ -72,19 +73,29 @@ export default function ChatWindow({id} : any) {
     }
   };
 
-  const [chatDT, setchatDT] = useState<any>(chatListData?.find((item: any) => item?.id == 20)?.payload);
+  // chatListData?.find((item: any) => item?.id == 20)?.payload
+  const [chatInfo, setchatInfo] = useState<any>();
+  const [chatDT, setchatDT] = useState<any>();
+  const [tk, settk] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(">>> msgID", msgID)
-  }, [msgID])
-  
-  const [first, setfirst] = useState<boolean>(false)
+    const getMessageDT = async () => {
+      let respondt = await getChatdetails(id);
+      setchatInfo(respondt?.meta);
+      setchatDT(respondt?.payload?.reverse())
+      settk(!tk)
+    }
 
-  const getTestAPI = async () => {
+    if(!chatDT){
+      getMessageDT();
+    }
+  }, [id])
 
-    console.log('xxxxxx')
-    // let test = await getChatdetails(20);
-    setfirst(!first)
+
+  function renderDate(value: any){
+    const unixDate = value;
+    const d = new Date(unixDate);
+    return dayjs(d).format('MMM DD, HH:mm A')
   }
 
   return (
@@ -102,9 +113,9 @@ export default function ChatWindow({id} : any) {
                   <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-3 h-3 rounded-xl right-0`}></div>
                 </div>
                 <div>
-                  <div className="font-medium">{contactInfo?.name}</div>
+                  <div className="font-medium capitalize">{chatInfo?.contact ? chatInfo?.contact?.name : ''}</div>
                   <div className=''>
-                    <div className="text-sm text-gray-400 inline-block mr-2">{'From Shopee'}</div>
+                    <div className="text-sm text-gray-400 inline-block mr-2">{'From -'}</div>
                     {/* <div className="text-sm text-blue-400 inline hover:text-blue-500" onClick={() => handleAvatarClick(contactInfo)}>{isRightBarOpen ? 'Close details' : 'More details'}</div> */}
                   </div>
                 </div>
@@ -112,22 +123,45 @@ export default function ChatWindow({id} : any) {
             </div>
           </div>
           <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
-            {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {return(
-              <div
-                key={`${msg.inbox_id}-${idx}`}
-                className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center" : "justify-end"}`}
-              >
-                {/* <span>{msg?.content}</span> */}
-                {msg?.message_type === 0 && (
-                    <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
-                      <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
-                    </div>
-                )}
-                  <div className={`${msg?.message_type === 0 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
-                    <p className="whitespace-pre-line">{msg.content}</p>
+            <div className=' flex flex-col-reverse'>
+              {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {
+                // console.log(">>> msg", msg)
+                return(
+                  <div
+                    key={`${msg.inbox_id}-${idx}`}
+                    className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center" : "justify-end"}`}
+                    style={{marginTop: chatDT?.length -1 != idx ? 15 : 0}}
+                  >
+                    {/* <span>{msg?.content}</span> */}
+                    {/* {msg?.message_type === 0 && (
+                      <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
+                        <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                      </div>
+                    )} */}
+                    {/* CachedIcon */}
+                    {/* <div className='flex w-full'> */}
+                      {msg?.status == 'failed' && msg?.message_type === 1 && <div className='h-full flex justify-end items-end'><CachedIcon sx={{fontSize: 12, color: '#f65353'}}/></div>}
+                      <div className={`${msg?.status == 'failed' ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
+                        <p className="whitespace-pre-line">{msg.content}</p>
+
+                        {msg?.message_type !== 2 && 
+                          <div className='text-[10px]'>
+                            {renderDate(msg?.created_at)}
+                          </div>
+                        }
+                      </div>
+                    {/* </div> */}
+                    {msg?.message_type === 1 && (
+                      <div className='h-full flex justify-end items-end'>
+                        <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
+                          <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-              </div>
-            )}): []}
+                )}): []
+              }
+            </div>
             {/* {chatData.map((chat) => (
               chat?.conversation.map((msg, idx) => (
                 <div
