@@ -14,7 +14,7 @@ interface Message {
   timestamp: Date;
 }
 
-export default function ChatWindow() {
+export default function ChatWindow({id} : any) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isRightBarOpen, setIsRightBarOpen] = useState(false);

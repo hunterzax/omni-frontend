@@ -32,7 +32,8 @@ export default function Page() {
       }
     >
       <ChatX.Provider value={null}>
-        <AppSidebar />
+        {/* <AppSidebar onselectid={(e) => console.log(e)}/> */}
+        <AppSidebar/>
         <SidebarInset>
           {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
             <SidebarTrigger className="-ml-1" />
@@ -51,7 +52,7 @@ export default function Page() {
           </header> */}
           
           <div className="flex flex-1 flex-col p-0">
-            <ChatWindow />
+            <ChatWindow id={20}/>
           </div>
           
         </SidebarInset>
