@@ -161,7 +161,7 @@ export default function ChatWindow({id} : any) {
             <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
               <div className=' flex flex-col-reverse'>
                 {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {
-                  // console.log(">>> msg", msg)
+                  console.log(">>> msg", msg)
                   return(
                     <div
                       key={`${msg.inbox_id}-${idx}`}
@@ -171,6 +171,11 @@ export default function ChatWindow({id} : any) {
                         {msg?.status == 'failed' && msg?.message_type === 1 && <div className='h-full flex justify-end items-end'><CachedIcon sx={{fontSize: 12, color: '#f65353'}}/></div>}
                         <div className={`${msg?.status == 'failed' ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
                           <p className="whitespace-pre-line">{msg.content}</p>
+                          {msg?.attachments?.length > 0 &&
+                          <div className='mt-2'>
+                            <img src={msg?.attachments[0]?.data_url} className='w-[200px] rounded-md'/>
+                          </div>
+                          }
 
                           {msg?.message_type !== 2 && 
                             <div className='text-[10px]'>
