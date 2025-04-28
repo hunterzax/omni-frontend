@@ -158,9 +158,14 @@ const data = {
   ],
 }
 
+type ReturnValue = {
+  onSelectID: (value: any) => void;
+}
+
+
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any) {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
@@ -194,6 +199,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     localStorage?.setItem('msgID', item?.id);
     setselectChat(item?.id);
     setfirst(!first)
+
+    onSelectID(() => {return 20})
   }
   
   return (
