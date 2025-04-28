@@ -165,7 +165,9 @@ type ReturnValue = {
 
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any) {
+// export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any, setSelectedID:any) {
+export function AppSidebar({ setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID: any }) {
+
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
@@ -173,13 +175,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
   const { setOpen } = useSidebar();
   const [selectTabs, setselectTabs] = useState<any>('mine');
 
-  const {getConversations} = useChatAPI();
+  const { getConversations } = useChatAPI();
 
   const msgID: any = localStorage?.getItem('msgID');
   const [dataChat, setdataChat] = useState<any>();
 
   useEffect(() => {
-    if(!dataChat){
+    if (!dataChat) {
       getDATA();
     }
   }, [dataChat]);
@@ -187,7 +189,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
   const [first, setfirst] = useState<boolean>(false)
 
   const getDATA: any = async () => {
-    let data: any =  await getConversations();
+    let data: any = await getConversations();
 
     setdataChat(data);
     setselectChat(msgID);
@@ -200,9 +202,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
     setselectChat(item?.id);
     setfirst(!first)
 
-    onSelectID(() => {return 20})
+    console.log('set ID')
+    // setSelectedID(item?.id)
+    setSelectedID(20)
+
+    // onSelectID(() => {return 20})
   }
-  
+
   return (
     <Sidebar
       collapsible="icon"
@@ -272,7 +278,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
         </SidebarFooter>
       </Sidebar>
 
-      <Sidebar collapsible="none"  className="w-[320px] hidden flex-2 md:flex border-r">
+      <Sidebar collapsible="none" className="w-[320px] hidden flex-2 md:flex border-r">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-foreground">
@@ -290,7 +296,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
                 className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
               >
                 <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
-                  <ChatIcon sx={{fontSize: 13, marginRight: '5px'}}/> All Conversations
+                  <ChatIcon sx={{ fontSize: 13, marginRight: '5px' }} /> All Conversations
                 </div>
               </a>
               <a
@@ -299,7 +305,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
                 className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
               >
                 <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out">
-                  <AlternateEmailIcon sx={{fontSize: 13, marginRight: '5px'}}/> Mentions
+                  <AlternateEmailIcon sx={{ fontSize: 13, marginRight: '5px' }} /> Mentions
                 </div>
               </a>
               <a
@@ -308,7 +314,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
                 className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
               >
                 <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out">
-                  <MarkEmailUnreadIcon sx={{fontSize: 13, marginRight: '5px'}}/> Unattended
+                  <MarkEmailUnreadIcon sx={{ fontSize: 13, marginRight: '5px' }} /> Unattended
                 </div>
               </a>
             </div>
@@ -316,40 +322,40 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
           <div className="py-1 px-2">
             <div className="px-2 text-sm font-[400] mb-2">{'Inboxeds'}</div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'APIByBank'}
+              <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'APIByBank'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'i24dice_bot'}
+              <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'i24dice_bot'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'Omni'}
+              <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'Omni'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <FolderIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'Zigma'}
+              <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'Zigma'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <AddIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'New Inbox'}
+              <AddIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'New Inbox'}
             </div>
           </div>
           <div className="py-1 px-2">
             <div className="px-2 text-sm font-[400] mb-2">{'Labels'}</div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-              <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2"/> {'facebook'}
+              <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2" /> {'facebook'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-              <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2"/> {'label1'}
+              <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2" /> {'label1'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-              <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2"/> {'line'}
+              <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2" /> {'line'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-              <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2"/> {'shopee'}
+              <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2" /> {'shopee'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-              <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2"/> {'tiktok'}
+              <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2" /> {'tiktok'}
             </div>
             <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-              <AddIcon sx={{fontSize: 12, marginRight: '5px'}}/> {'New label'}
+              <AddIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'New label'}
             </div>
           </div>
         </SidebarContent>
@@ -414,9 +420,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
                   onClick={() => onSelectChat(item)}
                 >
                   <div className="flex items-center space-x-3 cursor-pointer">
-                    <div 
+                    <div
                       className={`w-8 h-8 rounded-full relative bg-cover`}
-                      style={{backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})`}}
+                      style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
                     >
                       <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
                     </div>
@@ -424,16 +430,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, o
                       <div className="text-[12px] text-gray-400 inline-block mr-2">{item?.meta?.channel}</div>
                       <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
                       <div className="">
-                        <span><ReplyIcon sx={{fontSize: 12}}/></span>
+                        <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
                         {item?.last_non_activity_message?.processed_message_content}
                       </div>
                       <div className="flex mt-1">
                         {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
-                          return(
-                          <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]" key={lbitem +'_'+index}>
-                            {lbitem}
-                          </div>
-                        )}) : false}
+                          return (
+                            <div className="border border-red-[#dedede] rounded-md py-[1px] px-[3px] font-[500]" key={lbitem + '_' + index}>
+                              {lbitem}
+                            </div>
+                          )
+                        }) : false}
                       </div>
                     </div>
                   </div>

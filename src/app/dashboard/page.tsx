@@ -16,12 +16,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@components/ui/sidebar"
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
 export default function Page() {
 
   const ChatX = createContext(null);
-  
+
+  const [selectedID, setSelectedID] = useState<any>()
+  console.log('selectedID', selectedID)
+
   return (
     <SidebarProvider
       style={
@@ -32,8 +35,8 @@ export default function Page() {
       }
     >
       <ChatX.Provider value={null}>
-        {/* <AppSidebar onselectid={(e) => console.log(e)}/> */}
-        <AppSidebar/>
+        <AppSidebar setSelectedID={setSelectedID} />
+        {/* <AppSidebar/> */}
         <SidebarInset>
           {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
             <SidebarTrigger className="-ml-1" />
@@ -50,11 +53,12 @@ export default function Page() {
               </BreadcrumbList>
             </Breadcrumb>
           </header> */}
-          
+
           <div className="flex flex-1 flex-col p-0">
-            <ChatWindow id={20}/>
+            {/* <ChatWindow id={20} /> */}
+            <ChatWindow id={selectedID} />
           </div>
-          
+
         </SidebarInset>
       </ChatX.Provider>
     </SidebarProvider>
