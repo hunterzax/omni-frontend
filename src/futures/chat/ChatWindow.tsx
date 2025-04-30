@@ -12,6 +12,7 @@ import { Skeleton } from '@components/ui/skeleton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Spinloading from '@components/ui/loading';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip';
+import SendIcon from '@mui/icons-material/Send';
 
 interface Message {
   id: string;
@@ -86,16 +87,161 @@ export default function ChatWindow({id} : any) {
   useEffect(() => {
     setisLoading(false);
     const getMessageDT = async () => {
-      let respondt = await getChatdetails(id);
+      let respondt = await getChatdetails(id || msgID);
       setchatDT(respondt?.payload?.reverse())
       settk(!tk);
+
+      if(id == 20 || msgID == 20){
+        let mockMergedata: any = [
+          {
+            "id": 102,
+            "content": "ตัวนี้ครับ NERD MINER V.2 ESSENSE",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 0,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+                "id": 1,
+                "name": "TZ.J",
+                "available_name": "TZ.J",
+                "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                "type": "user",
+                "availability_status": "offline",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            },
+            "attachments" : 
+            [
+              {
+                  "id": 7,
+                  "message_id": 72,
+                  "file_type": "image",
+                  "account_id": 1,
+                  "extension": null,
+                  "data_url": "https://nueamek.com/wp-content/uploads/2024/07/naked-420.-5-768x1024.jpg",
+                  "thumb_url": "https://nueamek.com/wp-content/uploads/2024/07/naked-420.-5-768x1024.jpg",
+                  "file_size": 307012,
+                  "width": 1200,
+                  "height": 1200
+              }
+          ]
+          },
+          {
+            "id": 74,
+            "content": "Form Line",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 3,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745317049,
+            "private": false,
+            "source_id": null,
+            "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {
+                    "age": 30,
+                    "city": "Bangkok"
+                },
+                "email": "bank_ja_shop@example.com",
+                "id": 17,
+                "identifier": "bank-ja-001-shop",
+                "name": "แบงค์ ช็อปสุดเท่",
+                "phone_number": "+66812345678",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af4235df8dd0a4a4bbce663ede4661bd17d7f969/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--6d67cc85ee1ef5607c0fd1f48989b596f125a667/cute-shiba-inu-dog-cartoon-illustration_840648-34.jpg",
+                "blocked": false,
+                "type": "contact"
+            },
+          },
+          {
+            "id": 102,
+            "content": "ลูกค้าสนใจสินค้าตัวไหนอยู่หรอครับ \n",
+            "inbox_id": 1,
+            "conversation_id": 20,
+            "message_type": 1,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+                "id": 1,
+                "name": "TZ.J",
+                "available_name": "TZ.J",
+                "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                "type": "user",
+                "availability_status": "offline",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            }
+          },
+          {
+            "id": 102,
+            "content": "สวัสดีคับ ขอสอบถามข้อมูลเกี่ยวกับสินค้าหน่อยครับ\n",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 0,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+                "id": 1,
+                "name": "TZ.J",
+                "available_name": "TZ.J",
+                "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                "type": "user",
+                "availability_status": "offline",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            }
+          },
+          {
+            "id": 74,
+            "content": "Form Shopee",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 3,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745317049,
+            "private": false,
+            "source_id": null,
+            "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {
+                    "age": 30,
+                    "city": "Bangkok"
+                },
+                "email": "bank_ja_shop@example.com",
+                "id": 17,
+                "identifier": "bank-ja-001-shop",
+                "name": "แบงค์ ช็อปสุดเท่",
+                "phone_number": "+66812345678",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af4235df8dd0a4a4bbce663ede4661bd17d7f969/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--6d67cc85ee1ef5607c0fd1f48989b596f125a667/cute-shiba-inu-dog-cartoon-illustration_840648-34.jpg",
+                "blocked": false,
+                "type": "contact"
+            },
+          },
+        ];
+
+        setchatDT((pre: any) => [...mockMergedata, ...pre?.reverse()]);
+        settk(!tk);
+      }
 
       getAnotherdetail(respondt?.meta?.contact?.id);
     }
 
     getMessageDT();
   }, [id]);
-
+  
   const getAnotherdetail: any = async (userID: any) => {
     let respondt = await getUserdetails(userID);
 
@@ -159,11 +305,19 @@ export default function ChatWindow({id} : any) {
             <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
               <div className=' flex flex-col-reverse'>
                 {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {
-                  // console.log(">>> msg", msg)
                   return(
+                    msg?.message_type === 3 ? 
+                    <div className='grid grid-cols-3 justify-center items-center gap-2 py-3'>
+                      <div className='w-full bg-gray-200 h-[1px]'/>
+                      <div className='w-full flex justify-center items-center'>
+                        <div className='bg-orange-400 text-white text-center py-1 px-4 rounded-lg w-auto text-[10px] font-light'><SendIcon sx={{fontSize: 10}}/> {msg.content}</div>
+                      </div>
+                      <div className='w-full bg-gray-200 h-[1px]'/>
+                    </div>
+                      :
                     <div
                       key={`${msg.inbox_id}-${idx}`}
-                      className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center" : "justify-end"}`}
+                      className={`flex items-start space-x-2 ${msg?.message_type === 0 ? "" : msg?.message_type === 2 ? "justify-center text-[10px]" : "justify-end"}`}
                       style={{marginTop: chatDT?.length -1 != idx ? 5 : 0}}
                     >
                         {msg?.status == 'failed' && msg?.message_type === 1 && <div className='h-full flex justify-end items-end'><CachedIcon sx={{fontSize: 12, color: '#f65353'}}/></div>}

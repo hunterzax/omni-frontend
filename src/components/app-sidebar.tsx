@@ -161,7 +161,7 @@ const data = {
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
 // export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any, setSelectedID:any) {
-export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID: any, mode: 'conversations' | 'contacts' }) {
+export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID?: any, mode: 'conversations' | 'contacts' }) {
 
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
@@ -345,8 +345,8 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
         }
         
         {mode == 'contacts' && 
-        <SidebarContent>
-          <div className="py-2">
+        <SidebarContent className="py-2 w-[200px]">
+          <div>
             <div className="1-bars">
               <a
                 href="#"

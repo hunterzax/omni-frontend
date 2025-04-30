@@ -47,6 +47,24 @@ export function useChatAPI() {
     return {
         getConversations,
         getChatdetails,
-        getUserdetails
+        getUserdetails,
+    }
+}
+
+export function useLabelAPI() {
+    const getLabels = async () => {
+        try {
+            const response = await axios.get('/api/get-labels').then((res: any) => {return res?.data?.payload});
+
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+
+        return null
+    }
+
+    return {
+        getLabels
     }
 }

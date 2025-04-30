@@ -20,7 +20,14 @@ import { createContext, useEffect, useState } from 'react';
 
 export default function Page() {
 
+  const msgID: any = localStorage?.getItem('msgID');
   const [selectedID, setSelectedID] = useState<any>()
+
+  useEffect(() => {
+    if(msgID && !selectedID){
+      setSelectedID(msgID)
+    }
+  }, [selectedID])
 
   return (
     <SidebarProvider
