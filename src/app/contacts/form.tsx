@@ -69,7 +69,7 @@ const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                            <BreadcrumbPage>{dataContacts?.meta?.sender?.name}</BreadcrumbPage>
+                            <BreadcrumbPage>{dataContacts?.meta?.sender?.name || 'Not Available'}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
@@ -90,8 +90,8 @@ const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                 <div className="flex justify-start items-center text-black mt-3 font-bold capitalize">{dataContacts?.meta?.sender?.name}</div>
                 <div id="details" className="text-[14px]">
                     <div className="text-[#60646c]">
-                        <div className="flex justify-start items-center gap-3"><PersonIcon sx={{fontSize: 14}}/>{dataContacts?.meta?.sender?.identifier}</div>
-                        <div className="flex justify-start items-center gap-3"><ShowChartIcon sx={{fontSize: 14}}/>{getDaysAgo(dataContacts?.meta?.sender?.created_at, dataContacts?.meta?.sender?.last_activity_at)}</div>
+                        <div className="flex justify-start items-center gap-3"><PersonIcon sx={{fontSize: 14}}/>{dataContacts?.meta?.sender?.identifier || 'Not Available'}</div>
+                        <div className="flex justify-start items-center gap-3"><ShowChartIcon sx={{fontSize: 14}}/>{dataContacts?.meta?.sender ? getDaysAgo(dataContacts?.meta?.sender?.created_at, dataContacts?.meta?.sender?.last_activity_at) : 'Not Available'}</div>
                         <div className="mt-3 flex flex-wrap gap-3">
                             {listLabels?.length > 0 && listLabels?.map((item: any) => {return(
                                 <div className="h-[20px] bg-gray-100 font-light flex gap-2 justify-start items-center rounded-sm px-2">

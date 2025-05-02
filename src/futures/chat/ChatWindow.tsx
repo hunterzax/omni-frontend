@@ -6,7 +6,7 @@ import AttachFileOutlinedIcon from '@mui/icons-material/AttachFileOutlined';
 import AutoFixHighOutlinedIcon from '@mui/icons-material/AutoFixHighOutlined';
 import EmojiEmotionsOutlinedIcon from '@mui/icons-material/EmojiEmotionsOutlined';
 import CachedIcon from '@mui/icons-material/Cached';
-import { useChatAPI } from "@hooks/chat-api"
+import { useChatAPI, useInboxesAPI, useLabelAPI } from "@hooks/chat-api"
 import dayjs from 'dayjs';
 import { Skeleton } from '@components/ui/skeleton';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -84,6 +84,12 @@ export default function ChatWindow({id} : any) {
   const [tk, settk] = useState<boolean>(false);
   const [isLoading, setisLoading] = useState<boolean>(false);
 
+  const {getLabels} = useLabelAPI();
+  const {getInboxes} = useInboxesAPI();
+
+  const [dataLabels, setdataLabels] = useState<any>();
+  const [dataInboxes, setdataInboxes] = useState<any>();
+
   useEffect(() => {
     setisLoading(false);
     const getMessageDT = async () => {
@@ -132,7 +138,7 @@ export default function ChatWindow({id} : any) {
           },
           {
             "id": 74,
-            "content": "Form Line",
+            "content": "Message form Line",
             "inbox_id": 2,
             "conversation_id": 20,
             "message_type": 3,
@@ -157,6 +163,9 @@ export default function ChatWindow({id} : any) {
                 "blocked": false,
                 "type": "contact"
             },
+            'labels': [
+              'line'
+            ]
           },
           {
             "id": 102,
@@ -204,7 +213,7 @@ export default function ChatWindow({id} : any) {
           },
           {
             "id": 74,
-            "content": "Form Shopee",
+            "content": "Message form Shopee",
             "inbox_id": 2,
             "conversation_id": 20,
             "message_type": 3,
@@ -229,6 +238,9 @@ export default function ChatWindow({id} : any) {
                 "blocked": false,
                 "type": "contact"
             },
+            'labels': [
+              'shopee'
+            ]
           },
         ];
 
@@ -246,8 +258,24 @@ export default function ChatWindow({id} : any) {
     let respondt = await getUserdetails(userID);
 
     setchatInfo(respondt?.payload[0]);
+    await getdataLabels();
+    await getdataInboxes();
 
     setisLoading(true);
+  }
+
+  const getdataLabels: any = async () => {
+    let respondt = await getLabels();
+    // console.log(respondt)
+    setdataLabels(respondt);
+    settk(!tk);
+  }
+
+  const getdataInboxes: any = async () => {
+    let respondt = await getInboxes();
+    // console.log(respondt)
+    setdataInboxes(respondt);
+    settk(!tk);
   }
 
   function renderDate(value: any){
@@ -279,7 +307,7 @@ export default function ChatWindow({id} : any) {
                       <div>
                         <div className="font-medium capitalize">{chatInfo?.meta?.sender ? chatInfo?.meta?.sender?.name : ''}</div>
                         <div className=''>
-                          <div className="text-sm text-gray-400 inline-block mr-2">{'From ' + (chatInfo?.meta ? chatInfo?.meta?.channel : '-')}</div>
+                          {/* <div className="text-sm text-gray-400 inline-block mr-2">{'From ' + (chatInfo?.meta ? chatInfo?.meta?.channel : '-')}</div> */}
                           {/* <div className="text-sm text-blue-400 inline hover:text-blue-500" onClick={() => handleAvatarClick(contactInfo)}>{isRightBarOpen ? 'Close details' : 'More details'}</div> */}
                         </div>
                       </div>
@@ -308,9 +336,21 @@ export default function ChatWindow({id} : any) {
                   return(
                     msg?.message_type === 3 ? 
                     <div className='grid grid-cols-3 justify-center items-center gap-2 py-3'>
-                      <div className='w-full bg-gray-200 h-[1px]'/>
+                       <div className='w-full bg-gray-200 h-[1px]'/>
+                      {/* <div className='w-full h-[10px] bg-linear-to-r/srgb from-indigo-500 to-teal-400'/> */}
                       <div className='w-full flex justify-center items-center'>
-                        <div className='bg-orange-400 text-white text-center py-1 px-4 rounded-lg w-auto text-[10px] font-light'><SendIcon sx={{fontSize: 10}}/> {msg.content}</div>
+                        <div 
+                        // bg-orange-300
+                          className='text-center py-1 px-4 rounded-md w-full text-[10px] font-light shadow-sm flex gap-2 justify-center items-center border-b'
+                          style={{
+                            // backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == String(msg?.labels[0]))?.color,
+                            borderColor: dataLabels?.find((itemf: any) => itemf?.title == String(msg?.labels[0]))?.color
+                          }}
+                        >
+                          {/* <SendIcon sx={{fontSize: 10, marginRight: '5px'}}/> */}
+                          <div className="w-2 h-2 rounded-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == String(msg?.labels[0]))?.color}}/>
+                          {msg.content}
+                        </div>
                       </div>
                       <div className='w-full bg-gray-200 h-[1px]'/>
                     </div>
