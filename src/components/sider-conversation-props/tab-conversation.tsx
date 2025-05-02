@@ -63,7 +63,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                   return (
                     <div 
                       key={item?.id}
-                      onClick={() => selectCVS(item?.name)}
+                      onClick={() => selectCVS(item?.name, item?.id)}
                       // onClick={() => selectCVS(item?.name, item?.id)}
                       className={`bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer ${tabCVS == item?.name ? '!bg-blue-500 text-white' : 'bg-transparent'}`}
                     >

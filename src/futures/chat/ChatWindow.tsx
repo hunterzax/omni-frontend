@@ -22,6 +22,7 @@ interface Message {
 }
 
 export default function ChatWindow({ id }: any) {
+  // console.log(">>> id", id)
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isRightBarOpen, setIsRightBarOpen] = useState(false);
@@ -290,6 +291,11 @@ export default function ChatWindow({ id }: any) {
     return dayjs(d).format('MMM DD, HH:mm A')
   }
 
+  const foundInboxes = (id: any) => {
+    let data: any = dataInboxes?.find((itemf: any) => itemf?.id == id);
+    return data?.name;
+  }
+
   return (
     <div className="flex h-full bg-white relative">
       {/* <div>
@@ -313,7 +319,7 @@ export default function ChatWindow({ id }: any) {
                     <div>
                       <div className="font-medium capitalize">{chatInfo?.meta?.sender ? chatInfo?.meta?.sender?.name : ''}</div>
                       <div className=''>
-                        {/* <div className="text-sm text-gray-400 inline-block mr-2">{'From ' + (chatInfo?.meta ? chatInfo?.meta?.channel : '-')}</div> */}
+                        <div className="text-sm text-gray-400 inline-block mr-2">{foundInboxes(chatInfo?.inbox_id)}</div>
                         {/* <div className="text-sm text-blue-400 inline hover:text-blue-500" onClick={() => handleAvatarClick(contactInfo)}>{isRightBarOpen ? 'Close details' : 'More details'}</div> */}
                       </div>
                     </div>

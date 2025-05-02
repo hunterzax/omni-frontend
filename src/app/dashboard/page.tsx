@@ -24,11 +24,11 @@ import dynamic from 'next/dynamic';
 
 const PageContent = dynamic(() => Promise.resolve(function Page() {
 
-  // const msgID: any = localStorage?.getItem('msgID');
-  const [msgID, setMsgID] = useState<any>()
-  useEffect(() => {
-    setMsgID(localStorage?.getItem('msgID'))
-  }, []);
+  const msgID: any = localStorage?.getItem('msgID');
+  // const [msgID, setMsgID] = useState<any>()
+  // useEffect(() => {
+  //   setMsgID(localStorage?.getItem('msgID'))
+  // }, []);
 
   const [selectedID, setSelectedID] = useState<any>()
 
@@ -37,6 +37,8 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
       setSelectedID(msgID)
     }
   }, [selectedID])
+
+  console.log(">>> selectedID", selectedID)
 
   return (
     <SidebarProvider

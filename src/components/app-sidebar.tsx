@@ -241,8 +241,8 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     setdataChatDefault(data);
     if (cvs_tab_msg) {
       onFilterConversation(tabCVS || cvs_tab_msg, data?.payload);
-    } else {
-      onFilterAssigne(selectTabs, data?.payload);
+    }else {
+      onFilterAssigne(selectTabs, data?.payload, true);
     }
 
     setselectChat(msgID);
@@ -272,7 +272,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     settk(!tk);
   }
 
-  const selectCVS = (tab: any, id?:any) => {
+  const selectCVS = (tab: any, id?: any) => {
     localStorage?.setItem('cvs_tab_msg', tab);
     settabCVS(tab);
     settk(!tk);
@@ -281,8 +281,8 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
       onFilterConversation(tab, dataChatDefault?.payload);
     } else if (tab == 'all_cvs') {
       onFilterConversation(tab, dataChatDefault?.payload);
-      // localStorage?.removeItem('cvs_inboxes_id');
-      // getDATA();
+    }else{
+      onFilterConversation(tab, dataChatDefault?.payload, id);
     }
     // }else{
     //   localStorage?.setItem('cvs_inboxes_id', id);
@@ -297,7 +297,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     onFilterAssigne(tab);
   }
 
-  const onFilterConversation = (conversation: any, data: any) => {
+  const onFilterConversation = (conversation: any, data: any, id?: any) => {
     let defaultData: any = data || dataChatDefault?.payload;
     let filterData: any = [];
 
@@ -312,8 +312,10 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     }else if(conversation == 'all_cvs'){
       filterData = dataChatDefault?.payload || data;
     }else{
-      filterData = data || dataChatDefault?.payload;
+      filterData = dataChatDefault?.payload?.filter((itemf: any) => itemf?.inbox_id == id) || data;
     }
+
+    console.log(">>> filterData", filterData)
 
     setdataChatFilter(filterData);
     onFilterAssigne(selectTabs, filterData);
@@ -323,7 +325,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     }
   }
 
-  const onFilterAssigne = (tab: any, data?: any) => {
+  const onFilterAssigne = (tab: any, data?: any, re?: boolean) => {
     let defaultData: any = data || dataChatDefault?.payload;
     let newData: any = [];
 
@@ -341,6 +343,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
         break;
     }
 
+    if(re == true){setdataChatFilter(data);}
     setdataChat(newData);
     settk(!tk);
   }
@@ -356,6 +359,8 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     settk(!tk);
     // getConversationsByid
   }
+
+  console.log(">>> dataChatFilter", dataChatFilter)
 
   const foundInboxes = (id: any) => {
     let data: any = dataInboxes?.find((itemf: any) => itemf?.id == id);
@@ -554,7 +559,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
                       href="#"
                       key={item?.id}
                       className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight :bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-gray-100' : 'bg-transparent'}`}
-                      style={{backgroundColor: msgID == item?.id ? 'red' : 'transparent'}}
+                      // style={{backgroundColor: msgID == item?.id ? '#4343430f' : 'transparent'}}
                       onClick={() => onSelectChat(item)}
                     >
                       <div className="flex items-center space-x-3 cursor-pointer">
