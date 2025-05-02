@@ -16,7 +16,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
-export default function Page() {
+// export default function Page() {
+
+import dynamic from 'next/dynamic';
+
+const PageContent = dynamic(() => Promise.resolve(function Page() {
+
 
     const [selectedID, setSelectedID] = useState<any>();
     const [dataContacts, setdataContacts] = useState<any>();
@@ -89,7 +94,7 @@ export default function Page() {
                                 {dataContacts?.length > 0 && dataContacts?.map((item: any) => {
                                     console.log(">>> item", item)
                                     return(
-                                        <div className="border border-gray-200 px-4 py-3 rounded-md shadow-sm flex justify-between">
+                                        <div key={item?.id} className="border border-gray-200 px-4 py-3 rounded-md shadow-sm flex justify-between">
                                             <div className="flex gap-4">
                                                 <div 
                                                     className="w-10 h-10 rounded-full relative bg-cover"
@@ -115,4 +120,6 @@ export default function Page() {
             </SidebarInset>
         </SidebarProvider>
     )
-}
+}), { ssr: false });
+
+export default PageContent;

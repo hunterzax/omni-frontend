@@ -18,13 +18,22 @@ import {
 } from "@components/ui/sidebar"
 import { createContext, useEffect, useState } from 'react';
 
-export default function Page() {
+// export default function Page() {
 
-  const msgID: any = localStorage?.getItem('msgID');
+import dynamic from 'next/dynamic';
+
+const PageContent = dynamic(() => Promise.resolve(function Page() {
+
+  // const msgID: any = localStorage?.getItem('msgID');
+  const [msgID, setMsgID] = useState<any>()
+  useEffect(() => {
+    setMsgID(localStorage?.getItem('msgID'))
+  }, []);
+
   const [selectedID, setSelectedID] = useState<any>()
 
   useEffect(() => {
-    if(msgID && !selectedID){
+    if (msgID && !selectedID) {
       setSelectedID(msgID)
     }
   }, [selectedID])
@@ -38,10 +47,10 @@ export default function Page() {
         } as React.CSSProperties
       }
     >
-        <AppSidebar mode='conversations' setSelectedID={setSelectedID} />
-        {/* <AppSidebar/> */}
-        <SidebarInset>
-          {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+      <AppSidebar mode='conversations' setSelectedID={setSelectedID} />
+      {/* <AppSidebar/> */}
+      <SidebarInset>
+        {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
@@ -57,12 +66,14 @@ export default function Page() {
             </Breadcrumb>
           </header> */}
 
-          <div className="flex flex-1 flex-col p-0">
-            {/* <ChatWindow id={20} /> */}
-            <ChatWindow id={selectedID} />
-          </div>
+        <div className="flex flex-1 flex-col p-0">
+          {/* <ChatWindow id={20} /> */}
+          <ChatWindow id={selectedID} />
+        </div>
 
-        </SidebarInset>
+      </SidebarInset>
     </SidebarProvider>
   );
-}
+}), { ssr: false });
+
+export default PageContent;

@@ -62,7 +62,9 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                   // console.log(">>> item", item)
                   return (
                     <div 
-                      onClick={() => selectCVS(item?.name, item?.id)}
+                      key={item?.id}
+                      onClick={() => selectCVS(item?.name)}
+                      // onClick={() => selectCVS(item?.name, item?.id)}
                       className={`bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer ${tabCVS == item?.name ? '!bg-blue-500 text-white' : 'bg-transparent'}`}
                     >
                       <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} />{item?.name}
@@ -79,6 +81,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                 {dataLabels?.length > 0 && dataLabels?.map((item: any) => {
                   return (
                     <div
+                      key={item?.id}
                       onClick={() => selectCVS('#'+item?.title)}
                       className={`bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start ${tabCVS == String('#'+item?.title) ? '!bg-blue-500 text-white' : 'bg-transparent'}`}
                     >
