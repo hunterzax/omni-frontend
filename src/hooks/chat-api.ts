@@ -68,3 +68,39 @@ export function useLabelAPI() {
         getLabels
     }
 }
+
+export function useInboxesAPI() {
+    const getInboxes = async () => {
+        try {
+            const response = await axios.get('/api/get-inboxes').then((res: any) => {return res?.data?.payload});
+
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+
+        return null
+    }
+
+    return {
+        getInboxes
+    }
+}
+
+export function useContactsAPI() {
+    const getContactList = async () => {
+        try {
+            const response = await axios.get('/api/get-contacts').then((res: any) => {return res?.data});
+
+            return response;
+        } catch (error) {
+            console.error(error);
+        }
+
+        return null
+    }
+
+    return {
+        getContactList
+    }
+}

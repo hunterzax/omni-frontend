@@ -50,28 +50,28 @@ export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps
           <div className='flex gap-2 items-center text-gray-400'>
             <div className="font-medium capitalize text-black">{contactInfo?.meta?.sender?.name || ''}</div>
             <InfoOutlinedIcon sx={{fontSize: '12px'}}/>
-            <div className='cursor-pointer' onClick={() => window.location.href = '/contacts?id=' + contactInfo?.meta?.sender?.id}>
+            <div className='cursor-pointer' onClick={() => window.location.href = '/contacts/details?id=' + contactInfo?.meta?.sender?.id}>
               <LaunchOutlinedIcon sx={{fontSize: '12px'}}/>
             </div>
           </div>
           <div id='user-details' className='mt-2 opacity-80  text-[14px]'>
             <div className='flex gap-2 items-center'>
               <EmailOutlinedIcon sx={{ fontSize: '12px', color: '#6d6d6d' }}/>
-              {contactInfo?.meta?.sender?.email || ''}
-              <div className='p-1 bg-transparent w-[18px] h-[18px] flex text-gray-400 justify-center items-center rounded-sm cursor-pointer hover:text-white hover:bg-gray-400 duration-200 ease-in-out'><ContentPasteOutlinedIcon sx={{fontSize: 10}}/></div>
+              {contactInfo?.meta?.sender?.email || 'Not Available'}
+              <div className='p-1 bg-transparent w-[18px] h-[18px] flex text-gray-400 justify-center items-center rounded-sm cursor-pointer hover:text-white hover:bg-gray-400 duration-200 ease-in-out'>{contactInfo?.meta?.sender?.email && <ContentPasteOutlinedIcon sx={{fontSize: 10}}/>}</div>
             </div>
             <div className='flex gap-2 items-center'>
               <LocalPhoneIcon sx={{ fontSize: '12px', color: '#6d6d6d' }}/>
-              {contactInfo?.meta?.sender?.phone_number || '-'}
-              <div className='p-1 bg-transparent w-[18px] h-[18px] flex text-gray-400 justify-center items-center rounded-sm cursor-pointer hover:text-white hover:bg-gray-400 duration-200 ease-in-out'><ContentPasteOutlinedIcon sx={{fontSize: 10}}/></div>
+              {contactInfo?.meta?.sender?.phone_number || 'Not Available'}
+              <div className='p-1 bg-transparent w-[18px] h-[18px] flex text-gray-400 justify-center items-center rounded-sm cursor-pointer hover:text-white hover:bg-gray-400 duration-200 ease-in-out'>{contactInfo?.meta?.sender?.phone_number && <ContentPasteOutlinedIcon sx={{fontSize: 10}}/>}</div>
             </div>
             <div className='flex gap-2 items-center'>
               <SupervisedUserCircleOutlinedIcon sx={{ fontSize: '12px', color: '#6d6d6d' }}/>
-              {contactInfo?.meta?.sender?.identifier || ''}
+              {contactInfo?.meta?.sender?.identifier || 'Not Available'}
             </div>
             <div className='flex gap-2 items-center'>
               <AssuredWorkloadOutlinedIcon sx={{ fontSize: '12px', color: '#6d6d6d' }}/>
-              {contactInfo?.meta?.sender?.email || ''}
+              {contactInfo?.meta?.sender?.email || 'Not Available'}
             </div>
           </div>
           <div id='user-actions' className='flex gap-2 justify-start items-center mt-2'>
