@@ -94,7 +94,7 @@ const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                         <div className="flex justify-start items-center gap-3"><ShowChartIcon sx={{fontSize: 14}}/>{dataContacts?.meta?.sender ? getDaysAgo(dataContacts?.meta?.sender?.created_at, dataContacts?.meta?.sender?.last_activity_at) : 'Not Available'}</div>
                         <div className="mt-3 flex flex-wrap gap-3">
                             {listLabels?.length > 0 && listLabels?.map((item: any) => {return(
-                                <div className="h-[20px] bg-gray-100 font-light flex gap-2 justify-start items-center rounded-sm px-2">
+                                <div key={item?.id} className="h-[20px] bg-gray-100 font-light flex gap-2 justify-start items-center rounded-sm px-2">
                                     <div className="w-2 h-2 rounded-[2px]" style={{backgroundColor: item?.color}}/>
                                     <div className="text-black">{item?.title}</div>
                                     <div className="cursor-pointer" onClick={() => onselectLabels(item, 'del')}><CloseIcon sx={{fontSize: 12}}/></div>
@@ -106,7 +106,7 @@ const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56">
                                     {dataLabels?.length > 0 && dataLabels?.map((item: any) => {return(
-                                        <DropdownMenuLabel className="bg-transparent hover:bg-gray-200" style={{backgroundColor: listLabels?.find((itemf: any) => itemf?.id == item?.id) ? '#e5e7eb' : 'transparent'}} onClick={() => onselectLabels(item, 'add')}>
+                                        <DropdownMenuLabel key={item?.id} className="bg-transparent hover:bg-gray-200" style={{backgroundColor: listLabels?.find((itemf: any) => itemf?.id == item?.id) ? '#e5e7eb' : 'transparent'}} onClick={() => onselectLabels(item, 'add')}>
                                             <div className="flex gap-2 justify-start items-center font-light"><div className="w-2 h-2 rounded-[2px]" style={{backgroundColor: item?.color}}/>{item?.title}</div>
                                         </DropdownMenuLabel> 
                                     )})}
