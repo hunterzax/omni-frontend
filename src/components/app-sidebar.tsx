@@ -186,7 +186,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [tabCVS, settabCVS] = useState(cvs_tab_msg || 'all_cvs');
   const [isLoading, setisLoading] = useState<boolean>(false);
 
-  const { getConversations } = useChatAPI();
+  const {getConversations, getConversationsByid} = useChatAPI();
   const {getLabels} = useLabelAPI();
   const {getInboxes} = useInboxesAPI();
 
@@ -196,13 +196,26 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [dataLabels, setdataLabels] = useState<any>();
   const [dataInboxes, setdataInboxes] = useState<any>();
 
+  // useEffect(() => {
+  //   let idINBOX: any = localStorage?.getItem('cvs_inboxes_id');
+  //   if(mode == 'conversations'){
+  //     getdataInboxes();
+  //     getdataLabels();
+  //     if (!dataChat && !idINBOX) {
+  //       getDATA();
+  //     }else if(idINBOX){
+  //       getdataConversationByInbox(cvs_tab_msg, idINBOX);
+  //     }
+  //   }else if(mode == 'contacts'){
+
+  //   }
+  // }, [mode])
+
   useEffect(() => {
     if(mode == 'conversations'){
-      if (!dataChat) {
-        getdataInboxes();
-        getdataLabels();
-        getDATA();
-      }
+      getDATA();
+      getdataInboxes();
+      getdataLabels();
     }else if(mode == 'contacts'){
 
     }
@@ -212,13 +225,14 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
 
   const getDATA: any = async () => {
     let data: any = await getConversations();
-
+  
     setdataChatDefault(data);
     if(cvs_tab_msg){
       onFilterConversation(tabCVS || cvs_tab_msg, data?.payload);
     }else{
       onFilterAssigne(selectTabs, data?.payload);
     }
+
     setselectChat(msgID);
     setisLoading(true);
   }
@@ -246,7 +260,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     settk(!tk);
   }
 
-  const selectCVS = (tab: any) => {
+  const selectCVS = (tab: any, id?:any) => {
     localStorage?.setItem('cvs_tab_msg', tab);
     settabCVS(tab);
     settk(!tk);
@@ -255,7 +269,13 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
       onFilterConversation(tab, dataChatDefault?.payload);
     }else if(tab == 'all_cvs'){
       onFilterConversation(tab, dataChatDefault?.payload);
+      // localStorage?.removeItem('cvs_inboxes_id');
+      // getDATA();
     }
+    // }else{
+    //   localStorage?.setItem('cvs_inboxes_id', id);
+    //   getdataConversationByInbox(tab, id);
+    // }
   }
 
   const selectTabaAssigne = (tab: any) => {
@@ -277,12 +297,18 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
           filterData.push(findLabels[index]);
         }
       }
-    }else{
+    }else if(conversation == 'all_cvs'){
       filterData = dataChatDefault?.payload || data;
+    }else{
+      filterData = data || dataChatDefault?.payload;
     }
 
     setdataChatFilter(filterData);
     onFilterAssigne(selectTabs, filterData);
+    settk(!tk);
+    if(!isLoading){
+      setisLoading(true);
+    }
   }
 
   const onFilterAssigne = (tab: any, data?: any) => {
@@ -305,6 +331,23 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
 
     setdataChat(newData);
     settk(!tk);
+  }
+
+  const getdataConversationByInbox = async (conversation: any, id: any) => {
+    let data = await getConversationsByid(id);
+    setdataChatDefault(data);
+    if(cvs_tab_msg){
+      onFilterConversation(conversation, data?.payload);
+    }else{
+      onFilterAssigne(selectTabs, data?.payload);
+    }
+    settk(!tk);
+    // getConversationsByid
+  }
+
+  const foundInboxes = (id: any) => {
+    let data: any = dataInboxes?.find((itemf: any) => itemf?.id == id);
+    return data?.name;
   }
 
   return (
@@ -493,48 +536,49 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
           <SidebarContent>
             <SidebarGroup className="p-0">
               <SidebarGroupContent className="duration-200 ease-in-out">
-                {dataChat?.map((item: any) => (
-                  <a
-                    href="#"
-                    key={item?.id}
-                    className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight :bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-gray-100' : 'bg-transparent'}`}
-                    // style={{backgroundColor: msgID == item?.id ? 'red' : 'transparent'}}
-                    onClick={() => onSelectChat(item)}
-                  >
-                    <div className="flex items-center space-x-3 cursor-pointer">
-                      <div
-                        className={`w-8 h-8 rounded-full relative bg-cover`}
-                        style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
-                      >
-                        <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
-                      </div>
-                      <div>
-                        {/* wait for 0.02 */}
-                        {/* <div className="text-[12px] text-gray-400 inline-block mr-2">{item?.meta?.channel}</div> */}
-                        <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
-                        <div className="">
-                          <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
-                          {item?.last_non_activity_message?.processed_message_content}
+                {dataChat?.map((item: any) => {
+                  return(
+                    <a
+                      href="#"
+                      key={item?.id}
+                      className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight :bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-gray-100' : 'bg-transparent'}`}
+                      style={{backgroundColor: msgID == item?.id ? 'red' : 'transparent'}}
+                      onClick={() => onSelectChat(item)}
+                    >
+                      <div className="flex items-center space-x-3 cursor-pointer">
+                        <div
+                          className={`w-8 h-8 rounded-full relative bg-cover`}
+                          style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
+                        >
+                          <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
                         </div>
-                        <div className="flex mt-1 gap-1 flex-wrap">
-                          {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
-                            return (
-                              <div 
-                                key={lbitem + '_' + index}
-                                className="border border-[#dedede] rounded-md py-[1px] px-[5px] font-[500] flex items-center gap-1"
-                                // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
-                              >
-                                <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}/>
-                                {lbitem}
-                              </div>
-                            )
-                          }) : false}
+                        <div>
+                          {/* wait for 0.02 */}
+                          <div className="text-[12px] text-gray-400 inline-block mr-2">{foundInboxes(item?.inbox_id)}</div>
+                          <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
+                          <div className="">
+                            <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
+                            {item?.last_non_activity_message?.processed_message_content}
+                          </div>
+                          <div className="flex mt-1 gap-1 flex-wrap">
+                            {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
+                              return (
+                                <div 
+                                  key={lbitem + '_' + index}
+                                  className="border border-[#dedede] rounded-md py-[1px] px-[5px] font-[500] flex items-center gap-1"
+                                  // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
+                                >
+                                  <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}/>
+                                  {lbitem}
+                                </div>
+                              )
+                            }) : false}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </a>
-
-                ))}
+                    </a>
+                  )}
+                )}
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>

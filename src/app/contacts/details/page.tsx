@@ -3,7 +3,7 @@
 import { AppSidebar } from "@components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@components/ui/sidebar";
 import { useEffect, useState } from "react";
-import { useChatAPI, useLabelAPI } from "@hooks/chat-api";
+import { useChatAPI, useContactsAPI, useLabelAPI } from "@hooks/chat-api";
 import Spinloading from "@components/ui/loading";
 import FormContacts from "../form";
 import ActivityBar from "../activity";
@@ -19,6 +19,7 @@ export default function Page() {
 
     const {getUserdetails} = useChatAPI();
     const {getLabels} = useLabelAPI();
+    const {getContactdetails} = useContactsAPI();
 
     let page = window?.location?.href.split("id=");
     let USID: any = page[1];
@@ -30,6 +31,8 @@ export default function Page() {
     }, [dataContacts]);
 
     const getAnotherdetail: any = async (userID: any) => {
+        let testrespondt = await getContactdetails(userID);
+        console.log(">>> testrespondt", testrespondt)
         let respondt = await getUserdetails(userID);
         setdataContacts(respondt?.payload[0]);
         getdataLabels();
