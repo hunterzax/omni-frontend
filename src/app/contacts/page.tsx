@@ -109,7 +109,7 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div><KeyboardArrowDownIcon sx={{fontSize: 12}}/></div>
+                                            <div className="flex justify-center items-center"><KeyboardArrowDownIcon sx={{fontSize: 12}}/></div>
                                         </div>
                                     )
                                 })}

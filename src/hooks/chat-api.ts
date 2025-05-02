@@ -44,10 +44,24 @@ export function useChatAPI() {
         return null
     }
 
+    const getConversationsByid = async (id: any) => {
+        try {
+            const response = await axios.get(`/api/get-conversations-by-inbox`, { params: {'id': id}}).then((res: any) => {return res?.data?.data});
+
+            return response;
+        } catch (error) {
+            console.log('errrorrrrr')
+            console.error(error);
+        }
+
+        return null
+    }
+
     return {
         getConversations,
         getChatdetails,
         getUserdetails,
+        getConversationsByid
     }
 }
 
@@ -100,7 +114,21 @@ export function useContactsAPI() {
         return null
     }
 
+    const getContactdetails = async (id: any) => {
+        try {
+            const response = await axios.get(`/api/get-contact-details`, { params: {'id': id}}).then((res: any) => {return res?.data?.payload});
+
+            return response;
+        } catch (error) {
+            console.log('errrorrrrr')
+            console.error(error);
+        }
+
+        return null
+    }
+
     return {
-        getContactList
+        getContactList,
+        getContactdetails
     }
 }
