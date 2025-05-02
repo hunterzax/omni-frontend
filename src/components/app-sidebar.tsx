@@ -175,9 +175,19 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   // IRL you should use the url/router.
   let page: any = window?.location;
   let pageActive: any = page?.pathname?.split('/')[1];
-  
-  const cvs_tab_msg: any = localStorage?.getItem('cvs_tab_msg');
-  const msgID: any = localStorage?.getItem('msgID');
+
+
+  // const msgID: any = localStorage?.getItem('msgID');
+  // const msgID: any = localStorage?.getItem('msgID');
+  // const cvs_tab_msg: any = localStorage?.getItem('cvs_tab_msg');
+
+  const [msgID, setMsgID] = useState<any>()
+  const [cvs_tab_msg, setcvs_tab_msg] = useState<any>()
+
+  useEffect(() => {
+    setMsgID(localStorage?.getItem('msgID'))
+    setcvs_tab_msg(localStorage?.getItem('cvs_tab_msg'))
+  }, []);
 
   const [activeItem, setActiveItem] = React.useState(data.navMain[0])
   const [mails, setMails] = React.useState(data.mails)
@@ -187,8 +197,8 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [isLoading, setisLoading] = useState<boolean>(false);
 
   const { getConversations } = useChatAPI();
-  const {getLabels} = useLabelAPI();
-  const {getInboxes} = useInboxesAPI();
+  const { getLabels } = useLabelAPI();
+  const { getInboxes } = useInboxesAPI();
 
   const [dataChatDefault, setdataChatDefault] = useState<any>();
   const [dataChatFilter, setdataChatFilter] = useState<any>();
@@ -197,13 +207,13 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [dataInboxes, setdataInboxes] = useState<any>();
 
   useEffect(() => {
-    if(mode == 'conversations'){
+    if (mode == 'conversations') {
       if (!dataChat) {
         getdataInboxes();
         getdataLabels();
         getDATA();
       }
-    }else if(mode == 'contacts'){
+    } else if (mode == 'contacts') {
 
     }
   }, [mode])
@@ -214,9 +224,9 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     let data: any = await getConversations();
 
     setdataChatDefault(data);
-    if(cvs_tab_msg){
+    if (cvs_tab_msg) {
       onFilterConversation(tabCVS || cvs_tab_msg, data?.payload);
-    }else{
+    } else {
       onFilterAssigne(selectTabs, data?.payload);
     }
     setselectChat(msgID);
@@ -251,9 +261,9 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     settabCVS(tab);
     settk(!tk);
 
-    if(tab?.includes('#')){
+    if (tab?.includes('#')) {
       onFilterConversation(tab, dataChatDefault?.payload);
-    }else if(tab == 'all_cvs'){
+    } else if (tab == 'all_cvs') {
       onFilterConversation(tab, dataChatDefault?.payload);
     }
   }
@@ -269,15 +279,15 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     let defaultData: any = data || dataChatDefault?.payload;
     let filterData: any = [];
 
-    if(conversation?.includes('#')){
+    if (conversation?.includes('#')) {
       let params: any = conversation?.split('#');
       let findLabels: any = defaultData?.filter((itemf: any) => itemf?.labels?.length > 0);
       for (let index = 0; index < findLabels?.length; index++) {
-        if(findLabels[index]?.labels?.find((itemf: any) => itemf == params[1])){
+        if (findLabels[index]?.labels?.find((itemf: any) => itemf == params[1])) {
           filterData.push(findLabels[index]);
         }
       }
-    }else{
+    } else {
       filterData = dataChatDefault?.payload || data;
     }
 
@@ -291,13 +301,13 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
 
     switch (tab) {
       case "mine":
-          newData = defaultData?.filter((itemf: any) => itemf?.meta?.assignee?.id == 1);
+        newData = defaultData?.filter((itemf: any) => itemf?.meta?.assignee?.id == 1);
         break;
       case "unassigned":
-          newData = defaultData?.filter((itemf: any) => !itemf?.meta?.assignee);
+        newData = defaultData?.filter((itemf: any) => !itemf?.meta?.assignee);
         break;
       case "all":
-          newData = defaultData;
+        newData = defaultData;
         break;
       default:
         break;
@@ -342,22 +352,22 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
             <SidebarGroupContent className="px-1.5 md:px-0">
               <SidebarMenu>
                 <SidebarMenuItem key={'tab-menu'} className="grid grid-cols-1 gap-4">
-                  <SidebarMenuButton className={`${pageActive == 'dashboard' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Conversations', hidden: false}} onClick={() => window.location.href = '/dashboard'}>
+                  <SidebarMenuButton className={`${pageActive == 'dashboard' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Conversations', hidden: false }} onClick={() => window.location.href = '/dashboard'}>
                     <ChatIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'contacts' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Contacts', hidden: false}} onClick={() => window.location.href = '/contacts'}>
+                  <SidebarMenuButton className={`${pageActive == 'contacts' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Contacts', hidden: false }} onClick={() => window.location.href = '/contacts'}>
                     <AccountBoxIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'report' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Reports', hidden: false}}>
+                  <SidebarMenuButton className={`${pageActive == 'report' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Reports', hidden: false }}>
                     <LegendToggleIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'campaign' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Campaigns', hidden: false}}>
+                  <SidebarMenuButton className={`${pageActive == 'campaign' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Campaigns', hidden: false }}>
                     <CampaignIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'help-center' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Help Center', hidden: false}}>
+                  <SidebarMenuButton className={`${pageActive == 'help-center' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Help Center', hidden: false }}>
                     <HelpCenterIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'setting' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{children: 'Settings', hidden: false}}>
+                  <SidebarMenuButton className={`${pageActive == 'setting' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Settings', hidden: false }}>
                     <SettingsApplicationsIcon />
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -398,73 +408,73 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
 
       <Sidebar collapsible="none" className="w-[320px]] hidden flex-2 md:flex border-r duration-200 ease-in-out">
         {mode == 'conversations' &&
-        <SidebarContent>
-          <TabConversations 
-            isLoading={isLoading}
-            tabCVS={tabCVS}
-            selectCVS={selectCVS}
-            dataInboxes={dataInboxes}
-            dataLabels={dataLabels}
-          />
-        </SidebarContent>
+          <SidebarContent>
+            <TabConversations
+              isLoading={isLoading}
+              tabCVS={tabCVS}
+              selectCVS={selectCVS}
+              dataInboxes={dataInboxes}
+              dataLabels={dataLabels}
+            />
+          </SidebarContent>
         }
-        
-        {mode == 'contacts' && 
-        <SidebarContent className="py-2 w-[200px]">
-          <div>
-            <div className="1-bars">
-              <a
-                href="#"
-                key={'1-mnu-list'}
-                className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
-              >
-                <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
-                  <ChatIcon sx={{ fontSize: 13, marginRight: '5px' }} /> All Contacts
+
+        {mode == 'contacts' &&
+          <SidebarContent className="py-2 w-[200px]">
+            <div>
+              <div className="1-bars">
+                <a
+                  href="#"
+                  key={'1-mnu-list'}
+                  className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+                >
+                  <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
+                    <ChatIcon sx={{ fontSize: 13, marginRight: '5px' }} /> All Contacts
+                  </div>
+                </a>
+              </div>
+              <div className="py-1 px-2 mt-2">
+                <div className="px-2 text-sm font-[500] mb-2">{'Tagged with'}</div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                  <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2" /> {'facebook'}
                 </div>
-              </a>
-            </div>
-            <div className="py-1 px-2 mt-2">
-              <div className="px-2 text-sm font-[500] mb-2">{'Tagged with'}</div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-                <div className="w-2 h-2 bg-blue-500 rounded-[2px] mr-2" /> {'facebook'}
-              </div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-                <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2" /> {'label1'}
-              </div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-                <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2" /> {'line'}
-              </div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-                <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2" /> {'shopee'}
-              </div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
-                <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2" /> {'tiktok'}
-              </div>
-              <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
-                <AddIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'New label'}
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                  <div className="w-2 h-2 bg-green-300 rounded-[2px] mr-2" /> {'label1'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                  <div className="w-2 h-2 bg-green-500 rounded-[2px] mr-2" /> {'line'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                  <div className="w-2 h-2 bg-red-500 rounded-[2px] mr-2" /> {'shopee'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                  <div className="w-2 h-2 bg-gray-500 rounded-[2px] mr-2" /> {'tiktok'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer">
+                  <AddIcon sx={{ fontSize: 12, marginRight: '5px' }} /> {'New label'}
+                </div>
               </div>
             </div>
-          </div>
-        </SidebarContent>
+          </SidebarContent>
         }
       </Sidebar>
 
       {mode == 'conversations' &&
-      !isLoading ?
+        !isLoading ?
         <div className='w-full h-full overflow-hidden relative'>
-            <Spinloading spin={isLoading}/>
+          <Spinloading spin={isLoading} />
         </div>
         :
         <Sidebar collapsible="none" className="hidden flex-2 md:flex">
           <SidebarHeader className="gap-3 border-b p-4">
             <div className="flex items-center gap-3">
               <div>
-                <DehazeIcon sx={{fontSize: 14}}/>
+                <DehazeIcon sx={{ fontSize: 14 }} />
               </div>
-              <SidebarInput placeholder="Type to search..." className="h-[25px]" disabled/>
+              <SidebarInput placeholder="Type to search..." className="h-[25px]" disabled />
             </div>
             <div className="flex items-center gap-1">
-              <div className="text-[14px] font-bold">{tabCVS == 'all_cvs' ? 'Conversations' : tabCVS == 'mentions_cvs' ? 'Mentions' : tabCVS == 'unattended_cvs' ?  'Unattended' : tabCVS}</div>
+              <div className="text-[14px] font-bold">{tabCVS == 'all_cvs' ? 'Conversations' : tabCVS == 'mentions_cvs' ? 'Mentions' : tabCVS == 'unattended_cvs' ? 'Unattended' : tabCVS}</div>
               <div className="text-[10px] bg-gray-200 px-[4px] rounded-sm">{'Open'}</div>
             </div>
 
@@ -519,12 +529,12 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
                         <div className="flex mt-1 gap-1 flex-wrap">
                           {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
                             return (
-                              <div 
+                              <div
                                 key={lbitem + '_' + index}
                                 className="border border-[#dedede] rounded-md py-[1px] px-[5px] font-[500] flex items-center gap-1"
-                                // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
+                              // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
                               >
-                                <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}/>
+                                <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{ backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color }} />
                                 {lbitem}
                               </div>
                             )

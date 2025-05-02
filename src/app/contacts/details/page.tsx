@@ -8,7 +8,13 @@ import Spinloading from "@components/ui/loading";
 import FormContacts from "../form";
 import ActivityBar from "../activity";
 
-export default function Page() {
+// export default function Page() {
+
+
+import dynamic from 'next/dynamic';
+
+const PageContent = dynamic(() => Promise.resolve(function Page() {
+
 
     const [selectedID, setSelectedID] = useState<any>();
     const [dataContacts, setdataContacts] = useState<any>();
@@ -68,4 +74,6 @@ export default function Page() {
             </SidebarInset>
         </SidebarProvider>
     )
-}
+}), { ssr: false });
+
+export default PageContent;
