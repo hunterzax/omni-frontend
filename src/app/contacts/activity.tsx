@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Input } from "@components/ui/input";
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";
+import { colors } from "@mui/material";
 
 const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
     const onSelectHistory = (item: any) => {
@@ -45,15 +46,15 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                                     className="w-5 h-5 bg-gray-200 rounded-full relative bg-cover"
                                     style={{backgroundImage: `url(${dataContacts?.last_non_activity_message?.sender?.thumbnail ? dataContacts?.last_non_activity_message?.sender?.thumbnail : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s'})`}}
                                 />
-                            </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
             </TabsContent>
             <TabsContent value="notes">
-                <div className="bg-gray-200 p-2 rounded-md mt-5">
-                    <Textarea placeholder="Type your message here." className="!border-none !shadow-none !outline-none"/>
-                    <div className="flex justify-end"><Button className="h-[30px] !bg-transparent shadow-none text-blue-200">{'Save note'}</Button></div>
+                <div className="bg-gray-100 p-2 rounded-md mt-5">
+                    <Textarea placeholder="Type your message here." className="!border-none !shadow-none !outline-none text-black"/>
+                    <div className="flex justify-end"><Button className="h-[30px] !bg-transparent shadow-none text-blue-400">{'Save note'}</Button></div>
                 </div>
                 <div className="text-[14px] text-[#60646c] mt-3">{'There are no notes associated to this contact. You can add a note by typing in the box above.'}</div>
             </TabsContent>
@@ -73,13 +74,13 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                             <SelectContent>
                                 <div className="flex items-center border-gray-300 border p-2 rounded-md gap-2"><SearchIcon sx={{fontSize: 14, color: '#60646c'}}/><input placeholder="Search for a contact" className="!shadow-none !border-none !outline-none text-[14px]"/></div>
                                 <SelectGroup>
-                                    <SelectLabel>North America</SelectLabel>
-                                    <SelectItem value="est">Eastern Standard Time (EST)</SelectItem>
-                                    <SelectItem value="cst">Central Standard Time (CST)</SelectItem>
-                                    <SelectItem value="mst">Mountain Standard Time (MST)</SelectItem>
-                                    <SelectItem value="pst">Pacific Standard Time (PST)</SelectItem>
-                                    <SelectItem value="akst">Alaska Standard Time (AKST)</SelectItem>
-                                    <SelectItem value="hst">Hawaii Standard Time (HST)</SelectItem>
+                                    <SelectLabel>User Account</SelectLabel>
+                                    <SelectItem value="est" style={{color:"blue"}}>nucha jar (Facebook)</SelectItem>
+                                    <SelectItem value="cst" style={{color:"red"}}>Phakawat (Tiktok)</SelectItem>
+                                    <SelectItem value="mst" style={{color:"#ed6600"}}>RedBull99 (Shopee)</SelectItem>
+                                    <SelectItem value="pst" style={{color:"blue"}}>viton s.(Facebook)</SelectItem>
+                                    <SelectItem value="akst" style={{color:"#fca800"}}>Alaska maranu (Lazada)</SelectItem>
+                                    <SelectItem value="hst" style={{color:"red"}}>สมศรี ฆ่าหมีด้วยมือเปล่า (Tiktok)</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>

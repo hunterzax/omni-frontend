@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 HOST=0.0.0.0 PORT=3001 next dev",
     "build": "refine build",
-    "start": "refine start",
+    "start": "cross-env NODE_OPTIONS=--max_old_space_size=4096 HOST=0.0.0.0 PORT=3001 refine start",
     "lint": "next lint",
     "refine": "refine"
   },

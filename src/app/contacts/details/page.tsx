@@ -59,7 +59,12 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
                 } as React.CSSProperties
             }
         >
-            <AppSidebar mode="contacts"/>
+            <AppSidebar 
+            mode="contacts"
+            reFreshdt={false}
+            settoggleReload={() => {}}
+            setSelectedID={() => {}}
+                    />
             <SidebarInset>
                 {!isLoading ?
                     <div className='h-[calc(100dvh-270px)] overflow-hidden relative'>

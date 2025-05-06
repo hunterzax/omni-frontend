@@ -133,7 +133,7 @@ const RBP_ConversationAction: React.FC<ComponentProps> = ({contactInfo ,dataLabe
                             <div className="flex items-center border-gray-300 border p-2 rounded-md gap-2 mb-2"><SearchIcon sx={{fontSize: 14, color: '#60646c'}}/><input placeholder="Search agents" className="!shadow-none !border-none !outline-none text-[14px]"/></div>
                             <SelectGroup>
                                 {mockAgent?.length > 0 && mockAgent?.map((item: any) => {return(
-                                    <SelectItem value={String(item?.id)}>
+                                    <SelectItem  key={item?.id} value={String(item?.id)}>
                                         <div className="flex items-center gap-2">
                                             <div 
                                                 className="w-5 h-5 rounded-full relative bg-cover"
@@ -180,7 +180,7 @@ const RBP_ConversationAction: React.FC<ComponentProps> = ({contactInfo ,dataLabe
                             <div className="text-[12px] mt-2 mb-2">{'Priority'}</div>
                             <div className="flex items-center border-gray-300 border p-2 rounded-md gap-2 mb-2"><SearchIcon sx={{fontSize: 14, color: '#60646c'}}/><input placeholder="Search priority" className="!shadow-none !border-none !outline-none text-[14px]"/></div>
                             {mockPriority?.length > 0 && mockPriority?.map((item: any) => {return(
-                                <SelectItem value={String(item?.title).toLowerCase()}>
+                                <SelectItem key={item?.id} value={String(item?.title).toLowerCase()}>
                                     <div className="flex items-center gap-2">
                                         <div className="font-[500]">{item?.title}</div>
                                     </div>
