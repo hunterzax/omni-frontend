@@ -77,7 +77,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                 </div>
               </div>
               <div className="py-1 px-2">
-                <div className="px-2 text-sm font-[400] mb-2">{'Labels'}</div>
+                <div className="px-2 text-sm font-[400] mb-2">{'Tagged with'}</div>
                 {dataLabels?.length > 0 && dataLabels?.map((item: any) => {
                   return (
                     <div

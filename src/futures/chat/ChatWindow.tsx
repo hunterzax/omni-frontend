@@ -291,7 +291,7 @@ export default function ChatWindow({ id, settoggleReload }: any) {
     // console.log(">>> respondt", respondt)
 
     setchatInfo(respondt?.payload[0]);
-    await getdataLabels();
+    await getdataLables();
     await getdataInboxes();
 
     // console.log(">>>>", chatInfo)
@@ -300,7 +300,7 @@ export default function ChatWindow({ id, settoggleReload }: any) {
     settk(!tk);
   }
 
-  const getdataLabels: any = async () => {
+  const getdataLables: any = async () => {
     let respondt = await getLabels();
     // console.log(respondt)
     setdataLabels(respondt);
