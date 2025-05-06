@@ -182,8 +182,12 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
 
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
-  let page: any = window?.location;
-  let pageActive: any = page?.pathname?.split('/')[1];
+  let pageActive: string | undefined = undefined;
+
+  if (typeof window !== 'undefined') {
+    const pathname = window.location.pathname;
+    pageActive = pathname?.split('/')?.[1];
+  }
 
   useEffect(() => {
     if(reFreshdt == true){
