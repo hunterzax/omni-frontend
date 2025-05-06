@@ -125,7 +125,8 @@ export default function ChatWindow({ id, settoggleReload }: any) {
         setchatDT(respondt?.payload?.reverse())
         settk(!tk);
 
-        if (id == 20 || msgID == 20) {
+        // if (id == 22 || msgID == 22) {
+        if (id == 22) {
           let mockMergedata: any = [
             {
               "id": 102,
@@ -271,8 +272,372 @@ export default function ChatWindow({ id, settoggleReload }: any) {
               ]
             },
           ];
+
+          let mockMergedata2: any = [
+            {
+              "id": 74,
+              "content": "Message form Facebook",
+              "inbox_id": 2,
+              "conversation_id": 20,
+              "message_type": 3,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1745317049,
+              "private": false,
+              "source_id": null,
+              "sender": {
+                "additional_attributes": {},
+                "custom_attributes": {
+                  "age": 30,
+                  "city": "Bangkok"
+                },
+                "email": "bank_ja_shop@example.com",
+                "id": 17,
+                "identifier": "bank-ja-001-shop",
+                "name": "แบงค์ ช็อปสุดเท่",
+                "phone_number": "+66812345678",
+                "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af4235df8dd0a4a4bbce663ede4661bd17d7f969/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--6d67cc85ee1ef5607c0fd1f48989b596f125a667/cute-shiba-inu-dog-cartoon-illustration_840648-34.jpg",
+                "blocked": false,
+                "type": "contact"
+              },
+              'labels': [
+                'facebook'
+              ]
+            },
+            {
+              "id": 174,
+              "content": "TZ.J added facebook",
+              "inbox_id": 2,
+              "conversation_id": 23,
+              "message_type": 2,
+              "content_type": "text",
+              "status": "sent",
+              "content_attributes": {},
+              "created_at": 1746527682,
+              "private": false,
+              "source_id": null
+            },
+            {
+                "id": 175,
+                "content": "สวัสดีค่ะ ขอสอบถามข้อมูลเกี่ยวกับสินค้าตัวนี้หน่อยค่ะ",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 0,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746527682,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": "nat_phantakarn@example.com",
+                    "id": 20,
+                    "identifier": "nat_phantakarn-001",
+                    "name": "Nat Phantakarn",
+                    "phone_number": null,
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                }
+            },
+            {
+                "id": 176,
+                "content": "ตัวนี้ค่ะ",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 0,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746527994,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": "nat_phantakarn@example.com",
+                    "id": 20,
+                    "identifier": "nat_phantakarn-001",
+                    "name": "Nat Phantakarn",
+                    "phone_number": null,
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                },
+                "attachments": [
+                    {
+                        "id": 13,
+                        "message_id": 176,
+                        "file_type": "image",
+                        "account_id": 1,
+                        "extension": null,
+                        "data_url": "https://cw.i24.dev/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBIUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bc11cd3c25f90fefaa27c6a1b03f832d0687993b/image.png",
+                        "thumb_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBIUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bc11cd3c25f90fefaa27c6a1b03f832d0687993b/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/image.png",
+                        "file_size": 19286,
+                        "width": 542,
+                        "height": 384
+                    }
+                ]
+            },
+            {
+                "id": 177,
+                "content": "ไม่ทราบว่าคุณลูกค้าต้องการสอบถามเรื่องใดเกี่ยวกับสินค้านี้คะ?",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528047,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 178,
+                "content": "ทำงานแบบไหน",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 0,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528071,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": "nat_phantakarn@example.com",
+                    "id": 20,
+                    "identifier": "nat_phantakarn-001",
+                    "name": "Nat Phantakarn",
+                    "phone_number": null,
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                }
+            },
+            {
+                "id": 179,
+                "content": "เครื่อง 𝐍𝐞𝐫𝐝𝐌𝐢𝐧𝐞𝐫 𝐕𝟐 สามารถทำงานได้โดยไม่ต้องต่อกับคอมพิวเตอร์ เพียงแค่เสียบไฟเลี้ยงด้วย 𝐀𝐝𝐚𝐩𝐭𝐞𝐫 และเชื่อมต่อกับ 𝐇𝐮𝐛 𝐔𝐒𝐁 จากนั้นใช้มือถือในการตั้งค่าเชื่อมต่อกับ WiFi และการ์ดขุด เพียงตั้งค่าทีละตัวแล้วปล่อยให้ขุดได้เลย",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528096,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 180,
+                "content": "นอกจากนี้ยังสามารถเช็คสถานะการขุดได้จากเว็บไซต์ 𝐏𝐨𝐨𝐥 ด้วยนะคะ",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528108,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 181,
+                "content": "มีคำถามเพิ่มเติมเกี่ยวกับการใช้งานไหมคะ?",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528116,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 182,
+                "content": "ขุดเหรียญหรือคะ",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 0,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528266,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": "nat_phantakarn@example.com",
+                    "id": 20,
+                    "identifier": "nat_phantakarn-001",
+                    "name": "Nat Phantakarn",
+                    "phone_number": null,
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                }
+            },
+            {
+                "id": 183,
+                "content": "เหมือนการ์ดจอหรือเปล่า",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 0,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528274,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "additional_attributes": {},
+                    "custom_attributes": {},
+                    "email": "nat_phantakarn@example.com",
+                    "id": 20,
+                    "identifier": "nat_phantakarn-001",
+                    "name": "Nat Phantakarn",
+                    "phone_number": null,
+                    "thumbnail": "",
+                    "blocked": false,
+                    "type": "contact"
+                }
+            },
+            {
+                "id": 184,
+                "content": "ผลิตภัณฑ์นี้เป็นเครื่องขุดขนาดเล็กที่ถูกออกแบบมาเพื่อการขุด Bitcoin โดยเฉพาะ ไม่เหมือนการ์ดจอที่ใช้ในการเล่นเกมหรือทำงานกราฟิก",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528305,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 185,
+                "content": "เครื่องขุด NerdMiner V2 ใช้งานง่าย เพียงแค่เสียบไฟและตั้งค่าผ่านมือถือ คุณจะสามารถเริ่มขุด Bitcoin ได้ทันที",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528319,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 186,
+                "content": "ไม่ต้องใช้คอมพิวเตอร์หรืออุปกรณ์เพิ่มเติม แถมยังมีค่าบริโภคไฟฟ้าที่ต่ำมากอีกด้วย",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528334,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            },
+            {
+                "id": 187,
+                "content": "หากสนใจสามารถสั่งซื้อได้ทันที เพื่อไม่พลาดโอกาสในการขุด Bitcoin พร้อมรับ Block Reward ที่น่าสนใจ! หากมีคำถามเพิ่มเติมหรือข้อมูลอื่นๆ ที่ต้องการทราบ ยินดีให้บริการค่ะ",
+                "inbox_id": 2,
+                "conversation_id": 23,
+                "message_type": 1,
+                "content_type": "text",
+                "status": "sent",
+                "content_attributes": {},
+                "created_at": 1746528347,
+                "private": false,
+                "source_id": null,
+                "sender": {
+                    "id": 1,
+                    "name": "TZ.J",
+                    "available_name": "TZ.J",
+                    "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+                    "type": "user",
+                    "availability_status": "offline",
+                    "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+                }
+            }
+          ]
+          
+          let newdataMock: any = mockMergedata2?.reverse(); 
   
-          setchatDT((pre: any) => [...mockMergedata, ...pre?.reverse()]);
+          setchatDT((pre: any) => [...mockMergedata2?.reverse(), ...pre]);
           settk(!tk);
         }
   
@@ -547,7 +912,7 @@ export default function ChatWindow({ id, settoggleReload }: any) {
             </div>
             :
             <div id='body-chat' className={`h-[calc(100dvh-270px)] overflow-auto flex flex-col-reverse p-5 space-y-3`}>
-              <div className=' flex flex-col-reverse'>
+              <div className=' flex flex-col-reverse gap-y-1'>
                 {chatDT?.length > 0 ? chatDT?.map((msg: any, idx: any) => {
                   return (
                     msg?.message_type === 3 ?
@@ -577,7 +942,7 @@ export default function ChatWindow({ id, settoggleReload }: any) {
                         style={{ marginTop: chatDT?.length - 1 != idx ? 5 : 0 }}
                       >
                         {msg?.status == 'failed' && msg?.message_type === 1 && <div className='h-full flex justify-end items-end'><CachedIcon sx={{ fontSize: 12, color: '#f65353' }} /></div>}
-                        <div className={`${msg?.status == 'failed' && msg?.message_type === 1 ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
+                        <div className={`max-w-[600px] w-auto ${msg?.status == 'failed' && msg?.message_type === 1 ? 'bg-red-400 text-white' : msg?.message_type === 0 || msg?.message_type === 2 ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
                           <p className="whitespace-pre-line">{msg.content}</p>
                           {msg?.attachments?.length > 0 &&
                             <div className='mt-2'>

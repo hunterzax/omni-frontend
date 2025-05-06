@@ -670,9 +670,9 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
                             {/* wait for 0.02 */}
                             <div className="text-[12px] text-gray-400 inline-block mr-2">{foundInboxes(item?.inbox_id)}</div>
                             <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
-                            <div className="">
+                            <div className="flex">
                               <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
-                              {item?.last_non_activity_message?.processed_message_content}
+                              <div className="w-[220px] break-words text-ellipsis overflow-hidden">{item?.last_non_activity_message?.processed_message_content}</div>
                             </div>
                             <div className="flex mt-1 gap-1 flex-wrap">
                               {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
@@ -690,7 +690,9 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
                             </div>
                           </div>
                           <div>
-                            <div className="text-[10px]">{item?.priority}</div>
+                            <div className="text-[10px] text-right">
+                              {item?.priority}
+                            </div>
                             <div className="text-[10px]">{getDaysAgo(item?.created_at ,item?.last_activity_at)}</div>
                           </div>
                         </div>
