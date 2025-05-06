@@ -31,7 +31,7 @@ import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import SendIcon from '@mui/icons-material/Send';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddIcon from '@mui/icons-material/Add';
-import Spinloading from "./ui/loading"
+import Spinloading from "./ui/custom_by_bangju/loading"
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import TabConversations from "./sider-conversation-props/tab-conversation";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
@@ -39,6 +39,8 @@ import LegendToggleIcon from '@mui/icons-material/LegendToggle';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
+import dayjs from "dayjs";
+import CircleIcon from '@mui/icons-material/Circle';
 
 // conversationList
 
@@ -236,6 +238,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [tk, settk] = useState<boolean>(false)
 
   const getDATA: any = async () => {
+    let tokenMSG: any = localStorage?.getItem('msgID');
     let data: any = await getConversations();
   
     setdataChatDefault(data);
@@ -245,7 +248,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
       onFilterAssigne(selectTabs, data?.payload, true);
     }
 
-    setselectChat(msgID);
+    setselectChat(tokenMSG);
     setisLoading(true);
   }
 
@@ -315,7 +318,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
       filterData = dataChatDefault?.payload?.filter((itemf: any) => itemf?.inbox_id == id) || data;
     }
 
-    console.log(">>> filterData", filterData)
+    // console.log(">>> filterData", filterData)
 
     setdataChatFilter(filterData);
     onFilterAssigne(selectTabs, filterData);
@@ -360,12 +363,34 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     // getConversationsByid
   }
 
-  console.log(">>> dataChatFilter", dataChatFilter)
+  // console.log(">>> dataChatFilter", dataChatFilter)
 
   const foundInboxes = (id: any) => {
     let data: any = dataInboxes?.find((itemf: any) => itemf?.id == id);
     return data?.name;
   }
+
+  const getDaysAgo = (create_day: number, last_activity_day: number): any => {
+    const created = dayjs.unix(create_day);
+    const lastActivity = dayjs.unix(last_activity_day);
+    const now = dayjs();
+    const diffDays = now.diff(created, 'day');
+
+    let lastActivity_result: any;
+
+    const diffCheck: any = now.diff(dayjs(lastActivity), 'minute');
+    if(diffCheck >= 60){
+      lastActivity_result = now.diff(dayjs(lastActivity), 'hour') + 'h';
+    }else{
+      lastActivity_result = now.diff(dayjs(lastActivity), 'minute') + 'm';
+    }
+
+    return(<div className="flex items-center gap-1">
+      <div>{`${diffDays} d`}</div>
+      <CircleIcon sx={{fontSize: 4}}/>
+      <div>{lastActivity_result}</div>
+  </div>)
+  };
 
   return (
     <Sidebar
@@ -554,42 +579,51 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
             <SidebarGroup className="p-0">
               <SidebarGroupContent className="duration-200 ease-in-out">
                 {dataChat?.map((item: any) => {
+                  console.log(">>> item", item)
                   return(
                     <a
                       href="#"
                       key={item?.id}
-                      className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight :bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-gray-100' : 'bg-transparent'}`}
-                      // style={{backgroundColor: msgID == item?.id ? '#4343430f' : 'transparent'}}
+                      className={`flex flex-col items-start gap-2 whitespace-nowrap border-b px-3 py-2 text-sm leading-tight :bg-sidebar-accent hover:text-sidebar-accent-foreground ${selectChat == item?.id ? '!bg-gray-100' : 'bg-transparent'} hover:bg-gray-100`}
+                      style={{backgroundColor: selectChat == item?.id ? '#4343430f' : 'transparent'}}
                       onClick={() => onSelectChat(item)}
                     >
-                      <div className="flex items-center space-x-3 cursor-pointer">
-                        <div
-                          className={`w-8 h-8 rounded-full relative bg-cover`}
-                          style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
-                        >
-                          <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
-                        </div>
-                        <div>
-                          {/* wait for 0.02 */}
-                          <div className="text-[12px] text-gray-400 inline-block mr-2">{foundInboxes(item?.inbox_id)}</div>
-                          <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
-                          <div className="">
-                            <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
-                            {item?.last_non_activity_message?.processed_message_content}
+                      <div className="w-full flex items-center space-x-3 cursor-pointer">
+                        <div className="w-auto">
+                          <div
+                            className={`w-8 h-8 rounded-full relative bg-cover`}
+                            style={{ backgroundImage: `url(${item?.meta?.sender?.thumbnail || item?.meta?.sender?.thumbnail !== "" ? item?.meta?.sender?.thumbnail : defaultProfile})` }}
+                          >
+                            <div className={`${item?.meta?.sender?.availability_status == 'online' ? 'bg-green-400' : 'bg-transparent'} absolute w-2 h-2 rounded-xl right-0`}></div>
                           </div>
-                          <div className="flex mt-1 gap-1 flex-wrap">
-                            {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
-                              return (
-                                <div 
-                                  key={lbitem + '_' + index}
-                                  className="border border-[#dedede] rounded-md py-[1px] px-[5px] font-[500] flex items-center gap-1"
-                                  // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
-                                >
-                                  <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}/>
-                                  {lbitem}
-                                </div>
-                              )
-                            }) : false}
+                        </div>
+                        <div className="w-full flex justify-between">
+                          <div className="w-full">
+                            {/* wait for 0.02 */}
+                            <div className="text-[12px] text-gray-400 inline-block mr-2">{foundInboxes(item?.inbox_id)}</div>
+                            <div className="font-medium capitalize">{item?.meta?.sender?.name}</div>
+                            <div className="">
+                              <span><ReplyIcon sx={{ fontSize: 12 }} /></span>
+                              {item?.last_non_activity_message?.processed_message_content}
+                            </div>
+                            <div className="flex mt-1 gap-1 flex-wrap">
+                              {item?.labels?.length > 0 ? item?.labels?.map((lbitem: any, index: any) => {
+                                return (
+                                  <div 
+                                    key={lbitem + '_' + index}
+                                    className="border border-[#dedede] rounded-md py-[1px] px-[5px] font-[500] flex items-center gap-1"
+                                    // style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}
+                                  >
+                                    <div className="w-2 h-2 rounded-[2px] mt-[2px]" style={{backgroundColor: dataLabels?.find((itemf: any) => itemf?.title == lbitem)?.color}}/>
+                                    {lbitem}
+                                  </div>
+                                )
+                              }) : false}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[10px]">{item?.priority}</div>
+                            <div className="text-[10px]">{getDaysAgo(item?.created_at ,item?.last_activity_at)}</div>
                           </div>
                         </div>
                       </div>

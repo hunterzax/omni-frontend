@@ -4,7 +4,7 @@ import { AppSidebar } from "@components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@components/ui/sidebar";
 import { useEffect, useState } from "react";
 import { useChatAPI, useContactsAPI, useLabelAPI } from "@hooks/chat-api";
-import Spinloading from "@components/ui/loading";
+import Spinloading from "@components/ui/custom_by_bangju/loading";
 import FormContacts from "../form";
 import ActivityBar from "../activity";
 
@@ -38,7 +38,6 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
 
     const getAnotherdetail: any = async (userID: any) => {
         let testrespondt = await getContactdetails(userID);
-        console.log(">>> testrespondt", testrespondt)
         let respondt = await getUserdetails(userID);
         setdataContacts(respondt?.payload[0]);
         getdataLabels();

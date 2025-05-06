@@ -5,7 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import FolderIcon from '@mui/icons-material/Folder';
 import AddIcon from '@mui/icons-material/Add';
 import DehazeIcon from '@mui/icons-material/Dehaze';
-import Spinloading from '@components/ui/loading';
+import Spinloading from '@components/ui/custom_by_bangju/loading';
 
 interface ComponentProps {
     isLoading: boolean,
@@ -27,7 +27,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
               <div className="py-2">
                 <div className="1-bars">
                   <a
-                    href="#"
+                    // href="#"
                     key={'1-mnu-list'}
                     className={`flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1`}
                   >
@@ -37,7 +37,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                     </div>
                   </a>
                   <a
-                    href="#"
+                    // href="#"
                     key={'2-mnu-list'}
                     className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1 cus"
                   >
@@ -46,7 +46,7 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
                     </div>
                   </a>
                   <a
-                    href="#"
+                    // href="#"
                     key={'3-mnu-list'}
                     className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
                   >

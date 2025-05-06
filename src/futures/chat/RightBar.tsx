@@ -10,6 +10,10 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import Collapes from '@components/ui/custom_by_bangju/collapse';
+import RBP_ConversationAction from './RightbarProps/conversation-action';
+import { useEffect, useState } from 'react';
+import { useLabelAPI } from '@hooks/chat-api';
 
 interface RightBarProps {
   isOpen: boolean;
@@ -24,11 +28,31 @@ interface RightBarProps {
 
 export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps) {
 
+  const {getLabels} = useLabelAPI();
+
+  const [dataLabels, setdataLabels] = useState<any>();
+  const [isLoading, setisLoading] = useState<boolean>(false);
+  const [tk, settk] = useState<boolean>(false);
+
+  useEffect(() => {
+    if(!dataLabels){
+      getdataLabels();
+    }
+  }, [dataLabels]);
+
+  const getdataLabels: any = async () => {
+    let respondt = await getLabels();
+    setdataLabels(respondt);
+    setisLoading(true);
+    settk(!tk);
+}
+
   return (
+    // fixed right-0 top-0
     <div
-      className={`fixed right-0 top-0 h-full w-80 bg-white border-l transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      className={`h-full w-full bg-white border-l transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
     >
-      <div className='absolute top-[5px] right-[5px]'>
+      {/* <div className='absolute top-[5px] right-[5px]'>
         <button
           onClick={onClose}
           className="text-gray-500 hover:text-gray-700"
@@ -37,7 +61,7 @@ export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-      </div>
+      </div> */}
       {/* Contact Info */}
       <div className="p-4 border-b">
         <div 
@@ -93,50 +117,50 @@ export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps
       </div>
 
       {/* Action Sections */}
-      <div className="p-4 space-y-2">
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
-          <div className="font-medium">Conversation Actions</div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
-        </div>
+      <div className="p-4 space-y-2 overflow-auto h-[calc(100dvh-320px)]">
+        <Collapes 
+          title='Conversation Actions'
+          children={<RBP_ConversationAction contactInfo={contactInfo} dataLabels={dataLabels}/>}
+        />
 
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
+        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div className="font-medium">Macros</div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
+          <AddOutlinedIcon sx={{fontSize: 12, color: '#3b82f6'}}/>
         </div>
 
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
+        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div>
             <div className="font-medium">Conversation Information</div>
             <div className="text-sm text-gray-500 mt-1">
               Started: {new Date().toLocaleDateString()}
             </div>
           </div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
+          <AddOutlinedIcon sx={{fontSize: 12, color: '#3b82f6'}}/>
         </div>
 
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
+        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div className="font-medium">Contact Attributes</div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
+          <AddOutlinedIcon sx={{fontSize: 12, color: '#3b82f6'}}/>
         </div>
 
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
+        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div>
             <div className="font-medium">Previous Conversations</div>
             <div className="text-sm text-gray-500 mt-1">
               Total: 5 conversations
             </div>
           </div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
+          <AddOutlinedIcon sx={{fontSize: 12, color: '#3b82f6'}}/>
         </div>
 
-        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center">
+        <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div>
             <div className="font-medium">Conversation participants</div>
             <div className="text-sm text-gray-500 mt-1">
               2 participants
             </div>
           </div>
-          <AddOutlinedIcon sx={{fontSize: 12}}/>
+          <AddOutlinedIcon sx={{fontSize: 12, color: '#3b82f6'}}/>
         </div>
       </div>
     </div>
