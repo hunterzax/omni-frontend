@@ -158,7 +158,7 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                                 <SelectGroup>
                                     <SelectLabel>User Account</SelectLabel>
                                     {mockUserlist?.filter((itemf: any) => currentItemMerge ? itemf?.id !== currentItemMerge : itemf?.id !== null)?.map((item: any) => {return(
-                                        <SelectItem className=" cursor-pointer capitalize" style={{backgroundColor: selectItemMerge == item?.id ? 'rgba(59, 130, 246, 0.1)': 'none'}} value={item?.id}>
+                                        <SelectItem key={item?.id} className=" cursor-pointer capitalize" style={{backgroundColor: selectItemMerge == item?.id ? 'rgba(59, 130, 246, 0.1)': 'none'}} value={item?.id}>
                                             <div className="flex items-center gap-2">
                                                 <div className="w-2 h-2 rounded-[2px]" style={{backgroundColor: item?.labels?.color}}></div>
                                                 <div>{item?.name + ` (${item?.labels?.title})`}</div>

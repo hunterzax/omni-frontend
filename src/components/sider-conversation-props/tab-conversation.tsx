@@ -58,13 +58,11 @@ const TabConversations: React.FC<ComponentProps> = ({isLoading, tabCVS, selectCV
               </div>
               <div className="py-1 px-2">
                 <div className="px-2 text-sm font-[400] mb-2">{'Inboxeds'}</div>
-                {dataInboxes?.length > 0 && dataInboxes?.map((item: any) => {
-                  // console.log(">>> item", item)
+                {dataInboxes?.length > 0 &&  [...dataInboxes].sort((a, b) => a.name.localeCompare(b.name)).map((item: any) => {
                   return (
                     <div 
                       key={item?.id}
                       onClick={() => selectCVS(item?.name, item?.id)}
-                      // onClick={() => selectCVS(item?.name, item?.id)}
                       className={`bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer ${tabCVS == item?.name ? '!bg-blue-500 text-white' : 'bg-transparent'}`}
                     >
                       <FolderIcon sx={{ fontSize: 12, marginRight: '5px' }} />{item?.name}
