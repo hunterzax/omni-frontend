@@ -38,7 +38,7 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
     }
   }, [selectedID])
 
-  console.log(">>> selectedID", selectedID)
+  // console.log(">>> selectedID", selectedID)
 
   return (
     <SidebarProvider

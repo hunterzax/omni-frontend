@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import FormContacts from "./form";
 import ActivityBar from "./activity";
 import { useChatAPI, useContactsAPI, useLabelAPI } from "@hooks/chat-api";
-import Spinloading from "@components/ui/loading";
+import Spinloading from "@components/ui/custom_by_bangju/loading";
 import { Input } from "@components/ui/input";
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { Button } from "@components/ui/button";
@@ -92,7 +92,6 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
                             </div>
                             <div className="grid grid-cols-1 gap-3 mt-5">
                                 {dataContacts?.length > 0 && dataContacts?.map((item: any) => {
-                                    console.log(">>> item", item)
                                     return(
                                         <div key={item?.id} className="border border-gray-200 px-4 py-3 rounded-md shadow-sm flex justify-between">
                                             <div className="flex gap-4">
