@@ -73,6 +73,14 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                 color: '#6b7280'
             }
         },
+        {
+            id: 22,
+            name: 'Nat Oliver',
+            labels: {
+                title: 'Shopee',
+                color: '#ef4444'
+            }
+        },
     ]
 
     return (
@@ -173,13 +181,21 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                         <div className="bg-gray-200 text-red-600 px-2 rounded-sm w-[110px] text-center">{'To be deleted'}</div>
                     </div>
                     <div className="mt-2 w-full h-[45px] border border-gray-200 rounded-md">
-                        {currentItemMerge &&
+                        {currentItemMerge ?
                             <div className="flex items-center gap-2 h-full px-2">
                                 <div 
                                     className="w-5 h-5 rounded-full relative bg-cover"
                                     style={{backgroundImage: `url(${'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s'})`}}
                                 />
                                 <div className="font-[500]">{mockUserlist?.find((itemf: any) => itemf?.id == currentItemMerge)?.name + ` (${mockUserlist?.find((itemf: any) => itemf?.id == currentItemMerge)?.labels?.title})`}</div>
+                            </div>
+                            :
+                            <div className="flex items-center gap-2 h-full px-2">
+                                <div 
+                                    className="w-5 h-5 rounded-full relative bg-cover"
+                                    style={{backgroundImage: `url(${'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s'})`}}
+                                />
+                                <div className="font-[500]">{dataContacts?.meta?.sender?.name}</div>
                             </div>
                         }
                     </div>
