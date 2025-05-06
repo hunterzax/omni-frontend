@@ -69,7 +69,7 @@ const ReportsubOverview: React.FC<ComponentProps> = () => {
                 <div className="flex h-auto gap-3 md:flex-wrap lg:flex-nowrap mt-5 text-[#60646c]">
                     <div className="shadow-sm w-full lg:w-[60%] h-full rounded-lg border border-gray-200 p-3">
                         <div className="flex items-center gap-2">
-                            <div>{'Open Conversations'}</div>
+                            <div className='font-[500]'>{'Open Conversations'}</div>
                             <div className='text-[12px] flex items-center gap-1 bg-green-400 px-1 rounded-sm text-green-100'><CircleIcon sx={{fontSize: 6}}/>{'Live'}</div>
                         </div>
                         <div className='grid grid-cols-4 mt-5'>
@@ -93,7 +93,7 @@ const ReportsubOverview: React.FC<ComponentProps> = () => {
                     </div>
                     <div className="shadow-sm w-full lg:w-[40%] h-full rounded-lg border border-gray-200 p-3">
                         <div className="flex items-center gap-2">
-                            <div>{'Agent status'}</div>
+                            <div className='font-[500]'>{'Agent status'}</div>
                             <div className='text-[12px] flex items-center gap-1 bg-green-400 px-1 rounded-sm text-green-100'><CircleIcon sx={{fontSize: 6}}/>{'Live'}</div>
                         </div>
                         <div className='grid grid-cols-3 mt-5'>
@@ -116,7 +116,7 @@ const ReportsubOverview: React.FC<ComponentProps> = () => {
                 <div className="shadow-sm w-full h-auto rounded-lg border border-gray-200 p-3 text-[#60646c]">
                     <div className='flex justify-between'>
                         <div className="flex items-center gap-2">
-                            <div>{'Conversation Traffic'}</div>
+                            <div className='font-[500]'>{'Conversation Traffic'}</div>
                             <div className='text-[12px] flex items-center gap-1 bg-green-400 px-1 rounded-sm text-green-100'><CircleIcon sx={{fontSize: 6}}/>{'Live'}</div>
                         </div>
                         <div className='flex gap-2 items-center'>
@@ -144,7 +144,7 @@ const ReportsubOverview: React.FC<ComponentProps> = () => {
                 </div>
                 <div className="shadow-sm w-full h-auto rounded-lg border border-gray-200 p-3 text-[#60646c]">
                     <div className="flex items-center gap-2">
-                        <div>{'Conversations by agents'}</div>
+                        <div className='font-[500]'>{'Conversations by agents'}</div>
                         <div className='text-[12px] flex items-center gap-1 bg-green-400 px-1 rounded-sm text-green-100'><CircleIcon sx={{fontSize: 6}}/>{'Live'}</div>
                     </div>
                     <div className='mt-5'>
@@ -208,7 +208,7 @@ const ReportsubOverview: React.FC<ComponentProps> = () => {
                 </div>
                 <div className="shadow-sm w-full h-auto rounded-lg border border-gray-200 p-3 text-[#60646c]">
                     <div className="flex items-center gap-2">
-                        <div>{'Conversations by teams'}</div>
+                        <div className='font-[500]'>{'Conversations by teams'}</div>
                         <div className='text-[12px] flex items-center gap-1 bg-green-400 px-1 rounded-sm text-green-100'><CircleIcon sx={{fontSize: 6}}/>{'Live'}</div>
                     </div>
                     <div className='mt-5'>
