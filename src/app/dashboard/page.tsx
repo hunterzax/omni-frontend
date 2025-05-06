@@ -36,7 +36,9 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
     if (msgID && !selectedID) {
       setSelectedID(msgID)
     }
-  }, [selectedID])
+  }, [selectedID]);
+
+  const [toggleReload, settoggleReload] = useState<any>();
 
   // console.log(">>> selectedID", selectedID)
 
@@ -49,7 +51,7 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
         } as React.CSSProperties
       }
     >
-      <AppSidebar mode='conversations' setSelectedID={setSelectedID} />
+      <AppSidebar mode='conversations' setSelectedID={setSelectedID} reFreshdt={toggleReload} settoggleReload={settoggleReload}/>
       {/* <AppSidebar/> */}
       <SidebarInset>
         {/* <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
@@ -70,7 +72,7 @@ const PageContent = dynamic(() => Promise.resolve(function Page() {
 
         <div className="flex flex-1 flex-col p-0">
           {/* <ChatWindow id={20} /> */}
-          <ChatWindow id={selectedID} />
+          <ChatWindow id={selectedID} settoggleReload={settoggleReload}/>
         </div>
 
       </SidebarInset>

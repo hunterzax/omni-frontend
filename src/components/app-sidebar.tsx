@@ -171,12 +171,21 @@ const data = {
 const defaultProfile: any = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s';
 
 // export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>, onSelectID: any, setSelectedID:any) {
-export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID?: any, mode: 'conversations' | 'contacts' }) {
+export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ...props }: React.ComponentProps<typeof Sidebar> & { setSelectedID?: any, mode: 'conversations' | 'contacts', reFreshdt: any, settoggleReload: any }) {
 
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
   let page: any = window?.location;
   let pageActive: any = page?.pathname?.split('/')[1];
+
+  useEffect(() => {
+    if(reFreshdt == true){
+      getDATA(true);
+      setdataChatDefault(undefined);
+      settoggleReload(false);
+    }
+  }, [reFreshdt])
+  
 
 
   // const msgID: any = localStorage?.getItem('msgID');
@@ -208,21 +217,6 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
   const [dataLabels, setdataLabels] = useState<any>();
   const [dataInboxes, setdataInboxes] = useState<any>();
 
-  // useEffect(() => {
-  //   let idINBOX: any = localStorage?.getItem('cvs_inboxes_id');
-  //   if(mode == 'conversations'){
-  //     getdataInboxes();
-  //     getdataLabels();
-  //     if (!dataChat && !idINBOX) {
-  //       getDATA();
-  //     }else if(idINBOX){
-  //       getdataConversationByInbox(cvs_tab_msg, idINBOX);
-  //     }
-  //   }else if(mode == 'contacts'){
-
-  //   }
-  // }, [mode])
-
   useEffect(() => {
     if (mode == 'conversations') {
       if (!dataChat) {
@@ -237,19 +231,24 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
 
   const [tk, settk] = useState<boolean>(false)
 
-  const getDATA: any = async () => {
+  const getDATA: any = async (re?: boolean) => {
     let tokenMSG: any = localStorage?.getItem('msgID');
     let data: any = await getConversations();
   
-    setdataChatDefault(data);
+    setdataChatDefault((pre: any) => data);
     if (cvs_tab_msg) {
-      onFilterConversation(tabCVS || cvs_tab_msg, data?.payload);
+      if(re == true){
+        onFilterConversation(tabCVS || cvs_tab_msg, data?.payload, null, true);
+      }else{
+        onFilterConversation(tabCVS || cvs_tab_msg, data?.payload);
+      }
     }else {
       onFilterAssigne(selectTabs, data?.payload, true);
     }
 
     setselectChat(tokenMSG);
     setisLoading(true);
+    settk(!tk)
   }
 
   const [selectChat, setselectChat] = useState<any>();
@@ -300,28 +299,48 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
     onFilterAssigne(tab);
   }
 
-  const onFilterConversation = (conversation: any, data: any, id?: any) => {
+  const onFilterConversation = (conversation: any, data: any, id?: any, re?: boolean) => {
+    settk(!tk);
     let defaultData: any = data || dataChatDefault?.payload;
     let filterData: any = [];
 
-    if (conversation?.includes('#')) {
-      let params: any = conversation?.split('#');
-      let findLabels: any = defaultData?.filter((itemf: any) => itemf?.labels?.length > 0);
-      for (let index = 0; index < findLabels?.length; index++) {
-        if (findLabels[index]?.labels?.find((itemf: any) => itemf == params[1])) {
-          filterData.push(findLabels[index]);
+    if(re == true){
+      if (conversation?.includes('#')) {
+        let params: any = conversation?.split('#');
+        let findLabels: any = defaultData?.filter((itemf: any) => itemf?.labels?.length > 0);
+        for (let index = 0; index < findLabels?.length; index++) {
+          if (findLabels[index]?.labels?.find((itemf: any) => itemf == params[1])) {
+            filterData.push(findLabels[index]);
+          }
         }
+      }else if(conversation == 'all_cvs'){
+        filterData = data;
+      }else{
+        filterData = data?.filter((itemf: any) => itemf?.inbox_id == id);
       }
-    }else if(conversation == 'all_cvs'){
-      filterData = dataChatDefault?.payload || data;
+
+      setdataChatFilter(filterData);
+      onFilterAssigne(selectTabs, filterData);
+
     }else{
-      filterData = dataChatDefault?.payload?.filter((itemf: any) => itemf?.inbox_id == id) || data;
+      if (conversation?.includes('#')) {
+        let params: any = conversation?.split('#');
+        let findLabels: any = defaultData?.filter((itemf: any) => itemf?.labels?.length > 0);
+        for (let index = 0; index < findLabels?.length; index++) {
+          if (findLabels[index]?.labels?.find((itemf: any) => itemf == params[1])) {
+            filterData.push(findLabels[index]);
+          }
+        }
+      }else if(conversation == 'all_cvs'){
+        filterData = dataChatDefault?.payload || data;
+      }else{
+        filterData = dataChatDefault?.payload?.filter((itemf: any) => itemf?.inbox_id == id) || data;
+      }
+  
+      setdataChatFilter(filterData);
+      onFilterAssigne(selectTabs, filterData);
     }
 
-    // console.log(">>> filterData", filterData)
-
-    setdataChatFilter(filterData);
-    onFilterAssigne(selectTabs, filterData);
     settk(!tk);
     if(!isLoading){
       setisLoading(true);
@@ -397,7 +416,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
       collapsible="icon"
       className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row"
       {...props}
-    >
+    > 
       {/* This is the first sidebar */}
       {/* We disable collapsible and adjust width to icon. */}
       {/* This will make the sidebar appear as icons. */}
@@ -579,7 +598,7 @@ export function AppSidebar({ mode, setSelectedID, ...props }: React.ComponentPro
             <SidebarGroup className="p-0">
               <SidebarGroupContent className="duration-200 ease-in-out">
                 {dataChat?.map((item: any) => {
-                  console.log(">>> item", item)
+                  // console.log(">>> item", item)
                   return(
                     <a
                       href="#"

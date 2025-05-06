@@ -195,6 +195,17 @@
   display: none !important;
 }
 
+.has-arrow::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 80%;
+  border-top: 20px solid white;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  /* box-shadow: rgb(0, 0, 0) 0px 0px 5px 6px; */
+}
+
 .focus_fx_btn {
   animation: fx_btn_add_list 2s infinite;
 }
