@@ -13,6 +13,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Spinloading from '@components/ui/custom_by_bangju/loading';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip';
 import SendIcon from '@mui/icons-material/Send';
+import EmojiPicker from 'emoji-picker-react';
+import { EmojiStyle } from 'emoji-picker-react';
 
 interface Message {
   id: string;
@@ -21,11 +23,12 @@ interface Message {
   timestamp: Date;
 }
 
-export default function ChatWindow({ id }: any) {
+export default function ChatWindow({ id, settoggleReload }: any) {
   // console.log(">>> id", id)
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isRightBarOpen, setIsRightBarOpen] = useState(false);
+  const [useEmoji, setuseEmoji] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<{
     name: string;
     email: string;
@@ -33,7 +36,6 @@ export default function ChatWindow({ id }: any) {
   } | null>(null);
 
   const { getChatdetails, getUserdetails } = useChatAPI();
-
 
   // const msgID: any = localStorage?.getItem('msgID');
 
@@ -45,6 +47,8 @@ export default function ChatWindow({ id }: any) {
   // เอาไว้คลิกข้างนอกแล้วปิด rigth bar
   const headerPropsRef: any = useRef(null);
   const rightBarRef: any = useRef(null);
+  const EmojiRef: any = useRef(null);
+
   // useEffect(() => {
   //   function handleClickOutside(event: any) {
   //     if (rightBarRef.current && !rightBarRef.current.contains(event.target)) {
@@ -63,6 +67,19 @@ export default function ChatWindow({ id }: any) {
   //   //   document.removeEventListener("mousedown", handleClickOutside);
   //   // };
   // }, [isRightBarOpen]);
+
+  useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (EmojiRef.current && !EmojiRef.current.contains(event.target)) {
+        setuseEmoji(false);
+      }
+    }
+
+    if (useEmoji) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+  }, [useEmoji])
+  
 
   const handleSendMessage = () => {
     if (!inputMessage.trim()) return;
@@ -95,6 +112,7 @@ export default function ChatWindow({ id }: any) {
 
   const { getLabels } = useLabelAPI();
   const { getInboxes } = useInboxesAPI();
+  const { sendChat } = useChatAPI();
 
   const [dataLabels, setdataLabels] = useState<any>();
   const [dataInboxes, setdataInboxes] = useState<any>();
@@ -307,6 +325,184 @@ export default function ChatWindow({ id }: any) {
     return data?.name;
   }
 
+  const refreshMessageDT = async (id: any) => {
+    let respondt = await getChatdetails(id);
+    if(respondt){
+      setchatDT(respondt?.payload?.reverse())
+      settk(!tk);
+
+      if (id == 20 || msgID == 20) {
+        let mockMergedata: any = [
+          {
+            "id": 102,
+            "content": "ตัวนี้ครับ NERD MINER V.2 ESSENSE",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 0,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+              "id": 1,
+              "name": "TZ.J",
+              "available_name": "TZ.J",
+              "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+              "type": "user",
+              "availability_status": "offline",
+              "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            },
+            "attachments":
+              [
+                {
+                  "id": 7,
+                  "message_id": 72,
+                  "file_type": "image",
+                  "account_id": 1,
+                  "extension": null,
+                  "data_url": "https://nueamek.com/wp-content/uploads/2024/07/naked-420.-5-768x1024.jpg",
+                  "thumb_url": "https://nueamek.com/wp-content/uploads/2024/07/naked-420.-5-768x1024.jpg",
+                  "file_size": 307012,
+                  "width": 1200,
+                  "height": 1200
+                }
+              ]
+          },
+          {
+            "id": 74,
+            "content": "Message form Line",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 3,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745317049,
+            "private": false,
+            "source_id": null,
+            "sender": {
+              "additional_attributes": {},
+              "custom_attributes": {
+                "age": 30,
+                "city": "Bangkok"
+              },
+              "email": "bank_ja_shop@example.com",
+              "id": 17,
+              "identifier": "bank-ja-001-shop",
+              "name": "แบงค์ ช็อปสุดเท่",
+              "phone_number": "+66812345678",
+              "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af4235df8dd0a4a4bbce663ede4661bd17d7f969/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--6d67cc85ee1ef5607c0fd1f48989b596f125a667/cute-shiba-inu-dog-cartoon-illustration_840648-34.jpg",
+              "blocked": false,
+              "type": "contact"
+            },
+            'labels': [
+              'line'
+            ]
+          },
+          {
+            "id": 102,
+            "content": "ลูกค้าสนใจสินค้าตัวไหนอยู่หรอครับ \n",
+            "inbox_id": 1,
+            "conversation_id": 20,
+            "message_type": 1,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+              "id": 1,
+              "name": "TZ.J",
+              "available_name": "TZ.J",
+              "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+              "type": "user",
+              "availability_status": "offline",
+              "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            }
+          },
+          {
+            "id": 102,
+            "content": "สวัสดีคับ ขอสอบถามข้อมูลเกี่ยวกับสินค้าหน่อยครับ\n",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 0,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745816485,
+            "private": false,
+            "source_id": null,
+            "sender": {
+              "id": 1,
+              "name": "TZ.J",
+              "available_name": "TZ.J",
+              "avatar_url": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg",
+              "type": "user",
+              "availability_status": "offline",
+              "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6aac4ff39be9289136810426818a2690447a63b0/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lKYW5CbFp3WTZCa1ZVT2hOeVpYTnBlbVZmZEc5ZlptbHNiRnNIYVFINk1BPT0iLCJleHAiOm51bGwsInB1ciI6InZhcmlhdGlvbiJ9fQ==--5f3375fec9a9cd47682f6a1c0ccf7a892184cef2/56616e3afddc12dfe5a4112b03961fae.jpeg"
+            }
+          },
+          {
+            "id": 74,
+            "content": "Message form Shopee",
+            "inbox_id": 2,
+            "conversation_id": 20,
+            "message_type": 3,
+            "content_type": "text",
+            "status": "sent",
+            "content_attributes": {},
+            "created_at": 1745317049,
+            "private": false,
+            "source_id": null,
+            "sender": {
+              "additional_attributes": {},
+              "custom_attributes": {
+                "age": 30,
+                "city": "Bangkok"
+              },
+              "email": "bank_ja_shop@example.com",
+              "id": 17,
+              "identifier": "bank-ja-001-shop",
+              "name": "แบงค์ ช็อปสุดเท่",
+              "phone_number": "+66812345678",
+              "thumbnail": "https://cw.i24.dev/rails/active_storage/representations/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--af4235df8dd0a4a4bbce663ede4661bd17d7f969/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjkwYjE5bWFXeHNXd2RwQWZvdyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--6d67cc85ee1ef5607c0fd1f48989b596f125a667/cute-shiba-inu-dog-cartoon-illustration_840648-34.jpg",
+              "blocked": false,
+              "type": "contact"
+            },
+            'labels': [
+              'shopee'
+            ]
+          },
+        ];
+
+        setchatDT((pre: any) => [...mockMergedata, ...pre?.reverse()]);
+        settk(!tk);
+      }
+
+      getAnotherdetail(respondt?.meta?.contact?.id);
+      await settoggleReload(true);
+      setInputMessage('');
+    }
+  }
+
+  const sendMessage = async (id: any, data: any) => {
+    if(data?.length > 0){
+      let body = {
+        "content": String(data),
+        "message_type": "outgoing"
+      }
+  
+      let respondt: any = await sendChat(id, body);
+  
+      if(respondt?.success == true){
+        refreshMessageDT(respondt?.data?.conversation_id);
+      }
+    }
+  }
+
   return (
     <div className="h-full bg-white relative">
       <div ref={headerPropsRef} id='header-chat' className='h-[80px]' onClick={() => handleAvatarClick(contactInfo)}>
@@ -424,26 +620,24 @@ export default function ChatWindow({ id }: any) {
                 }) : []
                 }
               </div>
-              {/* {chatData.map((chat) => (
-                chat?.conversation.map((msg, idx) => (
-                  <div
-                    key={`${chat.customerId}-${idx}`}
-                    className={`flex items-start space-x-2 ${msg.sender === "customer" ? "" : "justify-end"}`}
-                  >
-                    {msg.sender === "customer" && (
-                      <div className="w-8 h-8 bg-gray-200 rounded-full relative bg-[url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzGYOukhtzQwJiFMmFihZEqZBr1wNMkTjgQg&s)] bg-cover">
-                        <div className={`${contactInfo?.status == 'Online' ? 'bg-green-400' : 'bg-gray-500'} absolute w-2 h-2 rounded-xl right-0`}></div>
-                      </div>
-                    )}
-                    <div className={`${msg.sender === "customer" ? "bg-gray-100 text-black" : "bg-blue-500 text-white"} rounded-lg p-3 max-w-[70%]`}>
-                      <p className="whitespace-pre-line">{msg.message}</p>
-                    </div>
-                  </div>
-                ))
-              ))} */}
             </div>
           }
           <div id='footer-chat' className='h-[190px]'>
+            <div className='relative'>
+              <div className=' absolute top-[-195px] translate-x-2 p-1 bg-white rounded-md shadow-md z-100 has-arrow'
+                style={{display: useEmoji ? 'block' : 'none'}}
+                ref={EmojiRef}
+              >
+                <EmojiPicker
+                  searchDisabled={false}
+                  skinTonesDisabled={true}
+                  previewConfig={{ showPreview: false }}
+                  onEmojiClick={(e) => setInputMessage((input) => input + e.emoji)}
+                  height={300}
+                  width={300}
+                />
+              </div>
+            </div>
             <div className="border-t p-4 w-full h-full">
               <div className='border rounded-[12px] p-4 h-full'>
                 <input
@@ -453,11 +647,16 @@ export default function ChatWindow({ id }: any) {
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder={`Shift + enter สำหรับบรรทัดใหม่ เริ่มต้นด้วย '/" เพื่อเลือกคำตอบสำเร็จรูป`}
                   className="flex-1 w-full rounded-lg px-4 py-5 focus:outline-none "
+                  onKeyDown={function(event){
+                    if(event?.code == 'Enter'){
+                      sendMessage(id, inputMessage);
+                    }
+                  }}
                 />
 
                 <div className="flex justify-between items-center flex-wrap pt-6">
                   <div className="flex items-center gap-2">
-                    <button className="bg-[#d2d2d2] w-[35px] h-[35px] text-white rounded-lg hover:bg-blue-600">
+                    <button className="trigger bg-[#d2d2d2] w-[35px] h-[35px] text-white rounded-lg hover:bg-blue-600" onClick={() => setuseEmoji(true)}>
                       <EmojiEmotionsOutlinedIcon sx={{ fontSize: '18px', color: '#6d6d6d' }} className="hover:text-white" />
                     </button>
                     <button className="bg-[#d2d2d2] w-[35px] h-[35px] text-white rounded-lg hover:bg-blue-600">
@@ -473,7 +672,11 @@ export default function ChatWindow({ id }: any) {
                   </div>
 
                   <div className="flex gap-4">
-                    <button className="bg-blue-500 font-bold tracking-wider text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-[117px]">
+                    <button 
+                      className="bg-blue-500 font-bold tracking-wider text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-[117px] disabled:bg-gray-300 disabled:cursor-not-allowed"
+                      onClick={() => sendMessage(id, inputMessage)}
+                      disabled={inputMessage?.length > 0 ? false: true}
+                    >
                       {`ส่ง`}
                     </button>
                   </div>

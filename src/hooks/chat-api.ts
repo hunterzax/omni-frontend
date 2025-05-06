@@ -57,11 +57,25 @@ export function useChatAPI() {
         return null
     }
 
+    const sendChat = async (id: any, body: any) => {
+        try {
+            const response = await axios.post(`/api/send-message`, { params: {'msg-id': id}, body }).then((res: any) => {return res?.data});
+
+            return response;
+        } catch (error) {
+            console.log('errrorrrrr')
+            console.error(error);
+        }
+
+        return null
+    }
+
     return {
         getConversations,
         getChatdetails,
         getUserdetails,
-        getConversationsByid
+        getConversationsByid,
+        sendChat
     }
 }
 
