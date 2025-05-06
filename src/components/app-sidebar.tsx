@@ -41,6 +41,13 @@ import HelpCenterIcon from '@mui/icons-material/HelpCenter';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import dayjs from "dayjs";
 import CircleIcon from '@mui/icons-material/Circle';
+import InsightsIcon from '@mui/icons-material/Insights';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import Diversity3Icon from '@mui/icons-material/Diversity3';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+
 
 // conversationList
 
@@ -452,10 +459,10 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
                   <SidebarMenuButton className={`${pageActive == 'contacts' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Contacts', hidden: false }} onClick={() => window.location.href = '/contacts'}>
                     <AccountBoxIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'report' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Reports', hidden: false }}>
+                  <SidebarMenuButton className={`${pageActive == 'report' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Reports', hidden: false }} onClick={() => window.location.href = '/report'}>
                     <LegendToggleIcon />
                   </SidebarMenuButton>
-                  <SidebarMenuButton className={`${pageActive == 'campaign' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Campaigns', hidden: false }}>
+                  {/* <SidebarMenuButton className={`${pageActive == 'campaign' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Campaigns', hidden: false }}>
                     <CampaignIcon />
                   </SidebarMenuButton>
                   <SidebarMenuButton className={`${pageActive == 'help-center' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Help Center', hidden: false }}>
@@ -463,7 +470,7 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
                   </SidebarMenuButton>
                   <SidebarMenuButton className={`${pageActive == 'setting' ? '!bg-blue-500 !text-white' : 'bg-transparent text-gray-500'} cursor-pointer `} tooltip={{ children: 'Settings', hidden: false }}>
                     <SettingsApplicationsIcon />
-                  </SidebarMenuButton>
+                  </SidebarMenuButton> */}
                 </SidebarMenuItem>
                 {/* {data.navMain.map((item) => (
                   <SidebarMenuItem key={item.title}>
@@ -551,9 +558,51 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
             </div>
           </SidebarContent>
         }
+
+        {mode == 'report' &&
+          <SidebarContent className="py-2 w-[200px]">
+            <div>
+              {/* <div className="1-bars">
+                <a
+                  href="#"
+                  key={'1-mnu-list'}
+                  className="flex items-center justify-start gap-2 whitespace-nowrap text-sm px-2 py-1"
+                >
+                  <div className="bg-blue-500 w-full px-2 py-1 rounded-sm text-white">
+                    <ChatIcon sx={{ fontSize: 13, marginRight: '5px' }} /> All Contacts
+                  </div>
+                </a>
+              </div> */}
+              <div className="py-1 px-2 space-y-2">
+                {/* <div className="px-2 text-sm font-[500] mb-2">{'Tagged with'}</div> */}
+                <div className="bg-blue-500 text-white w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-pointer flex items-center justify-start">
+                   <InsightsIcon sx={{marginRight: '5px', fontSize: 14}}/>{'Overview'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <ChatIcon sx={{marginRight: '5px', fontSize: 14}}/> {'Conversations'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <InsertEmoticonIcon sx={{marginRight: '5px', fontSize: 14}}/>{'CSAT'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <SupportAgentIcon sx={{marginRight: '5px', fontSize: 14}}/>{'CSAT'} {'Agents'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <LocalOfferIcon sx={{marginRight: '5px', fontSize: 14}}/>{'Labels'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <AllInboxIcon sx={{marginRight: '5px', fontSize: 14}}/>{'Inbox'}
+                </div>
+                <div className="bg-transparent w-full px-2 py-1 rounded-sm hover:bg-gray-200 duration-200 ease-in-out text-[14px] cursor-not-allowed flex items-center justify-start">
+                  <Diversity3Icon sx={{marginRight: '5px', fontSize: 14}}/>{'Team'}
+                </div>
+              </div>
+            </div>
+          </SidebarContent>
+        }
       </Sidebar>
 
-      {mode == 'conversations' &&
+      {mode == 'conversations' && (
         !isLoading ?
         <div className='w-full h-full overflow-hidden relative'>
           <Spinloading spin={isLoading} />
@@ -653,7 +702,7 @@ export function AppSidebar({ mode, setSelectedID, settoggleReload, reFreshdt, ..
             </SidebarGroup>
           </SidebarContent>
         </Sidebar>
-      }
+      )}
     </Sidebar>
   )
 }

@@ -5,6 +5,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Input } from "@components/ui/input";
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from "react";
+import NorthIcon from '@mui/icons-material/North';
 import { colors } from "@mui/material";
 
 const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
@@ -85,11 +86,18 @@ const ActivityBar: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                             </SelectContent>
                         </Select>
                     </div>
+                    <div className="flex relative justify-center">
+                        <div className="absolute mt-2 text-sm opacity-30">
+                            <NorthIcon sx={{fontSize: 30}}/>
+                            <NorthIcon sx={{fontSize: 30}}/>
+                            <NorthIcon sx={{fontSize: 30}}/>
+                        </div>
+                    </div>
                     <div className="flex justify-between mt-5">
                         <div className="text-black">{'To be merged'}</div>
                         <div className="bg-gray-200 text-red-600 px-2 rounded-sm w-[110px] text-center">{'To be deleted'}</div>
                     </div>
-                    <div className="mt-2 w-full h-[50px] border border-gray-200 rounded-md"></div>
+                    <div className="mt-2 w-full h-[35px] border border-gray-200 rounded-md"></div>
                     <div className="grid grid-cols-2 gap-2 mt-4">
                         <Button className="h-[40px] bg-gray-200 hover:bg-gray-300 text-blue-500">Cancle</Button>
                         <Button className="h-[40px] bg-blue-500 hover:bg-blue-600 text-white">Merge contact</Button>
