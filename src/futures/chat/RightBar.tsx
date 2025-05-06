@@ -118,10 +118,9 @@ export default function RightBar({ isOpen, onClose, contactInfo }: RightBarProps
 
       {/* Action Sections */}
       <div className="p-4 space-y-2 overflow-auto h-[calc(100dvh-320px)]">
-        <Collapes 
-          title='Conversation Actions'
-          children={<RBP_ConversationAction contactInfo={contactInfo} dataLabels={dataLabels}/>}
-        />
+        <Collapes title='Conversation Actions'>
+            <RBP_ConversationAction contactInfo={contactInfo} dataLabels={dataLabels}/>
+        </Collapes>
 
         <div className="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors flex justify-between items-center border border-gray-200">
           <div className="font-medium">Macros</div>

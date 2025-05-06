@@ -18,7 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
-
+                                                                                                                                                                                                                                                                                        
     const getDaysAgo = (create_day: number, last_activity_day: number): any => {
         const created = dayjs.unix(create_day);
         const lastActivity = dayjs.unix(last_activity_day);
@@ -159,6 +159,7 @@ const FormContacts: React.FC<any> = ({dataContacts, dataLabels}: any) => {
                                         <SelectItem value="cst_china">China Standard Time (CST)</SelectItem>
                                         <SelectItem value="jst">Japan Standard Time (JST)</SelectItem>
                                         <SelectItem value="kst">Korea Standard Time (KST)</SelectItem>
+                                        <SelectItem value="thi">Thailand Standard Time (THT)</SelectItem>
                                         <SelectItem value="ist_indonesia">
                                             Indonesia Central Standard Time (WITA)
                                         </SelectItem>
